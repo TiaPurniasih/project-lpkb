@@ -1,0 +1,1 @@
+import "../../public/tailadmin/bundle.js";
