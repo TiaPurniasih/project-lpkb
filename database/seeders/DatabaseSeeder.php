@@ -23,28 +23,28 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Super Admin',
-            'email' => 'super@admin.com',
+            'email' => 'super-admin@example.com',
             'password' => Hash::make('user1234!'),
             'role_level' => User::ROLE_SUPERADMIN,
         ]);
 
         User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@app.com',
+            'name' => 'Hermawan',
+            'email' => 'admin@example.com',
             'password' => Hash::make('user1234!'),
             'role_level' => User::ROLE_ADMIN,
         ]);
 
         User::factory()->create([
-            'name' => 'Moderator',
-            'email' => 'mod@app.com',
+            'name' => 'Bernadio',
+            'email' => 'kanwiljakbar@example.com',
             'password' => Hash::make('user1234!'),
-            'role_level' => User::ROLE_MODERATOR,
+            'role_level' => User::ROLE_KANWIL,
         ]);
 
         User::factory()->create([
-            'name' => 'Regular User',
-            'email' => 'user@app.com',
+            'name' => 'Ujang',
+            'email' => 'ujang@example.com',
             'password' => Hash::make('user1234!'),
             'role_level' => User::ROLE_USER,
         ]);
