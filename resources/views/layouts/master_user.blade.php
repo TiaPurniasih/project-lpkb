@@ -18,37 +18,17 @@
     </style>
 </head>
 
-<body  
-    x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
-    x-init="
-            darkMode = JSON.parse(localStorage.getItem('darkMode'));
-            $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark bg-gray-900': darkMode === true}">
-    
-    <!-- ===== Preloader Start ===== -->
-    <div x-show="loaded"
-        x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})"
-        class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white dark:bg-black">
-        <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-brand-500 border-t-transparent"></div>
-    </div>
-    <!-- ===== Preloader End ===== -->
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    @include('layouts.header_user')
 
-    <div class="flex h-screen overflow-hidden">
+    <!-- ===== Main Content Start ===== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+        @yield('contents')
+    </main>
 
-        <!-- ===== Content Area Start ===== -->
-        <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+    @include('layouts.footer_user')
 
-            @include('layouts.header_user')
-
-            <!-- ===== Main Content Start ===== -->
-            <main class="container mx-auto pt-5"> 
-                @yield('contents')
-            </main>
-            <!-- ===== Main Content End ===== -->
-
-        </div>
-        <!-- ===== Content Area End ===== -->
-    </div>
+    <!-- ===== Main Content End ===== -->
 
     <!-- ===== Page Wrapper End ===== -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\USER\DashboardController;
+use App\Http\Controllers\USER\ProfileController;
+use App\Http\Controllers\USER\PerizinanController;
 use App\Http\Controllers\CMS\DashboardController as DashboardCmsController;
 use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\KanwilController;
@@ -40,6 +41,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ---------------- PEMOHON ------------------
     Route::middleware('role.level:' . User::ROLE_USER)->group(function () {
         Route::get('/beranda', [DashboardController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('/profil/lembaga', [ProfileController::class, 'lembaga'])->name('user.profil.lembaga');
+        Route::get('/profil/riwayat-perizinan', [ProfileController::class, 'history'])->name('profile.history');
+        Route::get('/profil/riwayat-perizinan/{uid?}', [ProfileController::class, 'historyDetail'])->name('user.profile.history.detail');
+        Route::get('/perizinan', [PerizinanController::class, 'index'])->name('user.perizinan.index');
+        Route::get('/perizinan/{type}/{form}', [PerizinanController::class, 'index'])->name('user.perizinan.form');
     });
     // -------------- ENDPEMOHON -----------------
 
