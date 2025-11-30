@@ -73,4 +73,5 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
             default               => 'Guest',
         };
     }
+
 }

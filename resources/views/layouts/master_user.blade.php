@@ -34,19 +34,14 @@
     <!-- ===== Preloader End ===== -->
 
     <div class="flex h-screen overflow-hidden">
-        @include('layouts.navigation')
 
         <!-- ===== Content Area Start ===== -->
         <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
 
-            <!-- Small Device Overlay Start -->
-            <div @click="sidebarToggle = false" :class="sidebarToggle ? 'block lg:hidden' : 'hidden'"
-                class="fixed w-full h-screen z-9 bg-gray-900/50"></div>
-            <!-- Small Device Overlay End -->
-            @include('layouts.header')
+            @include('layouts.header_user')
 
             <!-- ===== Main Content Start ===== -->
-            <main class="p-5"> 
+            <main class="container mx-auto pt-5"> 
                 @yield('contents')
             </main>
             <!-- ===== Main Content End ===== -->

@@ -7,7 +7,7 @@
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90" x-text="pageName"></h2>
-                <a href="{{ route('manage.users.form') }}" class="ml-3 inline-flex items-center gap-2 px-2 py-2 rounded-full text-sm font-medium text-white transition bg-brand-500 shadow-theme-xs hover:bg-brand-600">
+                <a href="{{ route('cms.manage.users.form') }}" class="ml-3 inline-flex items-center gap-2 px-2 py-2 rounded-full text-sm font-medium text-white transition bg-brand-500 shadow-theme-xs hover:bg-brand-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                 </a>
             </div>
@@ -39,8 +39,8 @@
             <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6">
                 <!-- ====== Table Six Start -->
                     <div class="max-w-full overflow-x-auto">
-                        <table class="min-w-full" id="users-table" >
-                            
+                        <table class="w-full" id="users-table" >
+                          
                             <thead>
                                 <tr class="border-b border-gray-100 dark:border-gray-800">
                                     <th class="px-5 py-3 sm:px-6">
@@ -54,6 +54,13 @@
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
                                                 Alamat Email
+                                            </p>
+                                        </div>
+                                    </th>
+                                    <th class="px-5 py-3 sm:px-6">
+                                        <div class="flex items-center">
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
+                                                Status
                                             </p>
                                         </div>
                                     </th>
@@ -95,11 +102,12 @@ $(document).ready(function(){
     $('#users-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('manage.users.datatable') }}",
+        ajax: "{{ route('cms.manage.users.datatable') }}",
         columns: [
             // { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
+            { data: 'is_active', name: 'is_active' },
             { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action', orderable:false, searchable:false, className: 'text-right'  },
         ],
@@ -114,7 +122,7 @@ $(document).ready(function(){
                 text: '➕ Add User',
                 className: 'ml-3 inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700',
                 action: function () {
-                    window.location.href = "{{ route('manage.users.form') }}";
+                    window.location.href = "{{ route('cms.manage.users.form') }}";
                 }
             }
         ],

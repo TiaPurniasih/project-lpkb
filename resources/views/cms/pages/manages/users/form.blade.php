@@ -30,7 +30,7 @@
             <div class="space-y-6">
                 <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                     <div class="space-y-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
-                        <form action="{{ route('manage.users.store') }}" method="POST">
+                        <form action="{{ route('cms.manage.users.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $user->id }}">
                             <div class="-mx-2.5 flex flex-wrap gap-5">
