@@ -93,16 +93,106 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
     // ---------- END ADMIN & KANWIL -------------
-
-
+    
+    
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    
     // Route::middleware('role.level:' . User::ROLE_USER)->group(function () {
-    //     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    // });
+        //     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+        // });
+        
+    // ---------- TEMPLATES HERE -------------
+    Route::prefix( 'preview')->group(function () {
+        Route::get('/otp', function () {
+            return view('/preview/auth.otp');
+        })->name('otp');
 
+        Route::get('/pemohon/dashboard', function () {
+            return view('/preview/pemohon.dashboard');
+        })->name('pemohon.dashboard');
+
+        Route::get('/pemohon/riwayat-pengajuan', function () {
+            return view('/preview/pemohon.riwayat-permohonan');
+        })->name('pemohon.riwayat-pengajuan');
+
+        Route::get('/pemohon/riwayat-pengajuan/detail', function () {
+            return view('/preview/pemohon.detail-permohonan');
+        })->name('pemohon.detail-permohonan');
+
+        Route::get('/profil-lembaga', function () {
+            return view('/preview/pemohon.profil-lembaga');
+        })->name('profil-lembaga');
+
+        Route::get('/pengajuan-izin', function () {
+            return view('/preview/pemohon.pengajuan-izin');
+        })->name('pengajuan-izin');
+
+        Route::get('/pengajuan-izin/nava-dhammasekha', function () {
+            return view('/preview/pemohon.nava-dhammasekha');
+        })->name('nava-dhammasekha');
+
+        Route::get('/pengajuan-izin/nava-dhammasekha/dokumen', function () {
+            return view('/preview/pemohon.nava-dhammasekha-page2');
+        })->name('nava-dhammasekha.page2');
+
+        Route::get('/pengajuan-izin/mula-dhammasekha', function () {
+            return view('/preview/pemohon.mula-dhammasekha');
+        })->name('mula-dhammasekha');
+
+        Route::get('/pengajuan-izin/mula-dhammasekha/dokumen', function () {
+            return view('/preview/pemohon.mula-dhammasekha-page2');
+        })->name('mula-dhammasekha.page2');
+
+        Route::get('/pengajuan-izin/muda-dhammasekha', function () {
+            return view('/preview/pemohon.muda-dhammasekha');
+        })->name('muda-dhammasekha');
+
+        Route::get('/pengajuan-izin/muda-dhammasekha/dokumen', function () {
+            return view('/preview/pemohon.muda-dhammasekha-page2');
+        })->name('muda-dhammasekha.page2');
+
+        Route::get('/pengajuan-izin/uttama-dhammasekha', function () {
+            return view('/preview/pemohon.uttama-dhammasekha');
+        })->name('uttama-dhammasekha');
+
+        Route::get('/pengajuan-izin/uttama-dhammasekha/dokumen', function () {
+            return view('/preview/pemohon.uttama-dhammasekha-page2');
+        })->name('uttama-dhammasekha.page2');
+
+        Route::view('/preview/admin-pusat/dashboard', 'admin-pusat.dashboard')
+            ->name('admin-pusat.dashboard');
+
+        Route::view('/preview/admin-pusat/pengajuan-perizinan', 'admin-pusat.pengajuan-perizinan.index')
+            ->name('admin-pusat.pengajuan-perizinan.index');
+
+        Route::view('/preview/admin-pusat/pengajuan-perizinan/riwayat', 'admin-pusat.pengajuan-perizinan.history')
+            ->name('admin-pusat.pengajuan-perizinan.history');
+
+        Route::view('/preview/admin-pusat/manajemen-sertifikat', 'admin-pusat.manajemen-sertifikat.index')
+            ->name('admin-pusat.manajemen-sertifikat.index');
+
+        Route::view('/preview/admin-pusat/manajemen-kanwil', 'admin-pusat.manajemen-kanwil.index')
+            ->name('admin-pusat.manajemen-kanwil.index');
+
+        Route::view('/preview/admin-pusat/manajemen-kanwil/tambah', 'admin-pusat.manajemen-kanwil.create')
+            ->name('admin-pusat.manajemen-kanwil.create');
+
+        Route::view('/preview/admin-pusat/pengaturan', 'admin-pusat.pengaturan.index')
+            ->name('admin-pusat.pengaturan.index');
+
+        Route::get('/preview/admin-pusat/pengajuan-perizinan/{submission}', function ($submission) {
+            return view('/preview/admin-pusat.pengajuan-perizinan.show', [
+                'submissionId' => $submission,
+            ]);
+        })->name('admin-pusat.pengajuan-perizinan.show');
+
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->middleware(['auth', 'verified'])->name('dashboard');
+    });
+    // ---------- TEMPLATES HERE -------------
    
 
 

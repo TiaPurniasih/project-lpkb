@@ -18,11 +18,13 @@
     </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
+<body class="bg-gray-50">
     @include('layouts.header_user')
 
     <!-- ===== Main Content Start ===== -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+    <!-- <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1"> -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
         @yield('contents')
     </main>
 
