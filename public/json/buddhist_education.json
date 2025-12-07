@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "type": "formal",
+      "name": "Formal",
+      "children": [
+        { "code": "FD-01", "name": "Nava Dhammasekha" },
+        { "code": "FD-02", "name": "Mula Dhammasekha" },
+        { "code": "FD-03", "name": "Muda Dhammasekha" },
+        { "code": "FD-04", "name": "Uttama Dhammasekha" }
+      ]
+    },
+    {
+      "type": "non_formal",
+      "name": "Non Formal",
+      "children": [
+        { "code": "NFD-01", "name": "Pasastrian" },
+        { "code": "NFD-02", "name": "Sekolah Minggu Buddha" },
+        { "code": "NFD-03", "name": "Sikkhaphana" }
+      ]
+    }
+  ],
+  "meta": {
+    "updated_at": "2025-07-04"
+  }
+}

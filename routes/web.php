@@ -9,7 +9,7 @@ use App\Http\Controllers\CMS\KanwilController;
 use App\Http\Controllers\TemplateControllers;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Http;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +24,20 @@ use App\Models\User;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/api/provinces', function () {
+    return Http::get('https://wilayah.id/api/provinces.json')->json();
+});
+Route::get('/api/regencies/{id}', function ($id) {
+    return Http::get("https://wilayah.id/api/regencies/$id.json")->json();
+});
+Route::get('/api/districts/{id}', function ($id) {
+    return Http::get("https://wilayah.id/api/districts/$id.json")->json();
+});
+Route::get('/api/villages/{id}', function ($id) {
+    return Http::get("https://wilayah.id/api/villages/$id.json")->json();
+});
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -41,7 +55,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ---------------- PEMOHON ------------------
     Route::middleware('role.level:' . User::ROLE_USER)->group(function () {
         Route::get('/beranda', [DashboardController::class, 'dashboard'])->name('user.dashboard');
-        Route::get('/profil/lembaga', [ProfileController::class, 'lembaga'])->name('user.profil.lembaga');
+        // Route::get('/profil/lembaga', [ProfileController::class, 'lembaga'])->name('user.profil.lembaga');
+        Route::get('/profil/lembaga/{uid?}', [ProfileController::class, 'lembaga'])->name('user.profil.lembaga');
+        Route::post('/profil/lembaga/form', [ProfileController::class, 'store'])->name('user.profil.store');
         Route::get('/profil/riwayat-perizinan', [ProfileController::class, 'history'])->name('profile.history');
         Route::get('/profil/riwayat-perizinan/{uid?}', [ProfileController::class, 'historyDetail'])->name('user.profile.history.detail');
         Route::get('/perizinan', [PerizinanController::class, 'index'])->name('user.perizinan.index');
