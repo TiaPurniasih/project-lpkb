@@ -13,9 +13,11 @@ use App\Models\InstitutionProfile;
 
 class ProfileController extends Controller
 {
-    function lembaga($uid = null) {
-        if($uid){
-            $institution = InstitutionProfile::where('user_id', $uid)->first();
+    function lembaga(Request $request) {
+        $user = $request->user();
+
+        if($user->id){
+            $institution = InstitutionProfile::where('user_id', $user->id)->first();
             if (!$institution) {
                 $institution = new InstitutionProfile;
             }
@@ -28,63 +30,69 @@ class ProfileController extends Controller
         return view('users.profile.lembaga', $data);
     }
 
-public function store(Request $request)
-{
-    try {
-        // Cek apakah update atau create baru
-        if ($request->id) {
-            $institution = InstitutionProfile::findOrFail($request->id);
-        } else {
-            $institution = new InstitutionProfile;
-        }
-
-        // Ambil semua input kecuali file
-        $data = $request->except([
-            'registration_certificate_document',
-            'articles_of_association_document',
-            'facility_photo',
-            'front_building_photo',
-            'side_building_photo',
-            'facility_photo_extra',
-            'bank_account_photo',
-        ]);
-
-        $data['user_id'] = auth()->id();
-
-        // Daftar file
-        $fileFields = [
-            'registration_certificate_document',
-            'articles_of_association_document',
-            'facility_photo',
-            'front_building_photo',
-            'side_building_photo',
-            'facility_photo_extra',
-            'bank_account_photo',
-        ];
-
-        // Upload file
-        foreach ($fileFields as $field) {
-            if ($request->hasFile($field)) {
-                $data[$field] = $request->file($field)
-                    ->store('institutions', 'public');
+    public function store(Request $request)
+    {
+        try {
+            // Cek apakah update atau create baru
+            if ($request->id) {
+                $institution = InstitutionProfile::findOrFail($request->id);
+            } else {
+                $institution = new InstitutionProfile;
             }
+
+            // Ambil semua input kecuali file
+            $data = $request->except([
+                'registration_certificate_document',
+                'articles_of_association_document',
+                'facility_photo',
+                'front_building_photo',
+                'side_building_photo',
+                'facility_photo_extra',
+                'bank_account_photo',
+            ]);
+
+            $data['user_id'] = auth()->id();
+
+            // Daftar file
+            $fileFields = [
+                'registration_certificate_document',
+                'articles_of_association_document',
+                'facility_photo',
+                'front_building_photo',
+                'side_building_photo',
+                'facility_photo_extra',
+                'bank_account_photo',
+            ];
+
+            // Upload file
+            foreach ($fileFields as $field) {
+                if ($request->hasFile($field)) {
+                    $data[$field] = $request->file($field)
+                        ->store('institutions', 'public');
+                }
+            }
+
+            // Simpan ke DB
+            $institution->fill($data);
+            $institution->save();
+
+            return redirect('/beranda')
+                ->with('success', 'Data berhasil disimpan!');
         }
 
-        // Simpan ke DB
-        $institution->fill($data);
-        $institution->save();
-
-        return redirect('/beranda')
-            ->with('success', 'Data berhasil disimpan!');
+        catch (\Exception $e) {
+            return redirect('/beranda')
+                ->with('error', 'Kesalahan: ' . $e->getMessage());
+        }
     }
-
-    catch (\Exception $e) {
-        return redirect('/beranda')
-            ->with('error', 'Kesalahan: ' . $e->getMessage());
-    }
-}
 
     function history() {
         return view('users.profile.history');
+    }
+
+    function account(Request $request){
+        $data['user'] = $request->user();
+
+        return view('users.profile.account', $data);
     }
 }

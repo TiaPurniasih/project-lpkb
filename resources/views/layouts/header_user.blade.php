@@ -47,7 +47,7 @@
 
                     <ul class="flex flex-col gap-1 border-b border-gray-200 pt-4 pb-3">
                         <li>
-                            <a href="#"
+                            <a href="{{ route('user.profil.account') }}"
                                 class="group text-theme-sm flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400  dark:hover:bg-white/5 dark:hover:text-gray-300">
                                 <svg class="fill-gray-500 group-hover:fill-gray-700"
                                     width="24" height="24" viewBox="0 0 24 24" fill="none"

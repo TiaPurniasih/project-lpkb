@@ -57,7 +57,7 @@
                                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                 value="{{ old('responsible_person_name', $institution->responsible_person_name) }}"
                                 name="responsible_person_name"
-                                id="responsible_person_name">
+                                id="responsible_person_name" required>
                     </div>
 
                     <!-- Nama Lembaga Pendidikan -->
@@ -70,7 +70,7 @@
                                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                 value="{{ old('institution_name', $institution->institution_name) }}"
                                 name="institution_name"
-                                id="institution_name">
+                                id="institution_name" required>
                     </div>
 
                     <!-- Nama Kepala Lembaga -->
@@ -83,7 +83,7 @@
                                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                 value="{{ old('institution_head_name', $institution->institution_head_name) }}"
                                 name="institution_head_name"
-                                id="institution_head_name">
+                                id="institution_head_name" required>
                     </div>
 
                     <!-- Jalur Pendidikan -->
@@ -114,7 +114,7 @@
                                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                 value="{{ old('organizing_body_name', $institution->organizing_body_name) }}"
                                 name="organizing_body_name"
-                                id="organizing_body_name">
+                                id="organizing_body_name" required>
                     </div>
 
                     <!-- Nomor Telepon Lembaga -->
@@ -127,7 +127,7 @@
                                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                 value="{{ old('institution_phone', $institution->institution_phone) }}"
                                 name="institution_phone"
-                                id="institution_phone">
+                                id="institution_phone" required>
                     </div>
 
             
@@ -140,7 +140,8 @@
                         <div class="relative">
                             <input type="text" 
                                     placeholder="Masukkan Tanggal" 
-                                    class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" name="establishment_date" id="establishment_date" value="{{ old('establishment_date', $institution->establishment_date) }}">
+                                    class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" name="establishment_date" id="establishment_date" value="{{ old('establishment_date', $institution->establishment_date) }}"
+                                    required>
                             <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
@@ -170,8 +171,8 @@
                     Alamat Lengkap Badan Penyelenggara <span class="text-red-600">*</span>
                 </label>
                 <textarea rows="4" 
-                            placeholder="Masukkan alamat lengkap badan penyelenggara" 
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none" name="organizing_body_address" id="organizing_body_address">{{ old('organizing_body_address', $institution->organizing_body_address) }}</textarea>
+                        placeholder="Masukkan alamat lengkap badan penyelenggara" 
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none" name="organizing_body_address" id="organizing_body_address" required>{{ old('organizing_body_address', $institution->organizing_body_address) }}</textarea>
             </div>
         </div>
     </div>
@@ -259,7 +260,7 @@
                             Provinsi <span class="text-red-600">*</span>
                         </label>
                         <div class="relative">
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="province" id="province">
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="province" id="province" required>
                                 <option value="">Pilih Provinsi</option>
                             </select>
                             <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -274,7 +275,7 @@
                             Kabupaten <span class="text-red-600">*</span>
                         </label>
                         <div class="relative">
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="city" id="city">
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="city" id="city" required>
                                 <option value="">Pilih Kabupaten</option>
                             </select>
                             <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -292,7 +293,7 @@
                             Kecamatan <span class="text-red-600">*</span>
                         </label>
                         <div class="relative">
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="district" id="district">
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="district" id="district" required>
                                 <option value="">Pilih Kecamatan</option>
                             </select>
                             <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -307,7 +308,7 @@
                             Kelurahan <span class="text-red-600">*</span>
                         </label>
                         <div class="relative">
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="village" id="village">
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="village" id="village" required>
                                 <option value="">Pilih Kelurahan</option>
                             </select>
                             <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">

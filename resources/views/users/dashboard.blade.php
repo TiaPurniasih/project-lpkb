@@ -37,7 +37,7 @@
                 <p class="text-sm text-gray-600 mb-6 leading-relaxed">Lengkapi data dan dokumen umum lembaga sebelum mengajukan izin.</p>
                 <div class="mt-auto">
                     <!-- <a href="{{ route('user.profil.lembaga') }}" class="text-sm font-medium text-red-600 hover:text-red-700 inline-flex items-center" style="white-space: nowrap;"> -->
-                    <a href="{{ route('user.profil.lembaga', Auth::id()) }}" class="text-sm font-medium text-red-600 hover:text-red-700 inline-flex items-center" style="white-space: nowrap;">
+                    <a href="{{ route('user.profil.lembaga') }}" class="text-sm font-medium text-red-600 hover:text-red-700 inline-flex items-center" style="white-space: nowrap;">
                         Lengkapi Data
                         <svg class="w-4 h-4 ml-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

@@ -15,4 +15,23 @@ class PerizinanController extends Controller
     function index() {
         return view('users.perizinan.index');
     }
+
+    function permition(Request $request, $type, $form)  {
+        $config = config('siopkb.form_type.'.$type);
+
+        $data['form'] = null;
+        foreach ($config as $value) {
+            if($value['code'] == $form){
+                $data['form'] = $value;
+            }
+        }
+
+        $data['params'] = [
+            'type' => $type,
+            'form' => $type
+        ];
+
+        return view('users.perizinan.form', $data);
+        
+    }
 }
