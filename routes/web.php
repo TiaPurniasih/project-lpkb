@@ -22,20 +22,8 @@ use Illuminate\Support\Facades\Http;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/api/provinces', function () {
-    return Http::get('https://wilayah.id/api/provinces.json')->json();
-});
-Route::get('/api/regencies/{id}', function ($id) {
-    return Http::get("https://wilayah.id/api/regencies/$id.json")->json();
-});
-Route::get('/api/districts/{id}', function ($id) {
-    return Http::get("https://wilayah.id/api/districts/$id.json")->json();
-});
-Route::get('/api/villages/{id}', function ($id) {
-    return Http::get("https://wilayah.id/api/villages/$id.json")->json();
+    // return view('welcome');
+    return redirect('/beranda');
 });
 
 
@@ -194,17 +182,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         })->middleware(['auth', 'verified'])->name('dashboard');
     });
     // ---------- TEMPLATES HERE -------------
-   
-
-
 
 });
 
 Route::get('/templates/alerts', [TemplateControllers::class, 'alerts'])->name('template.alerts');
 Route::get('/templates/basic-tables', [TemplateControllers::class, 'basicTable'])->name('template.basic_tables');
-
-
-
 
 // // Pengaturan Roles
 // Route::get('/moderator', function () {

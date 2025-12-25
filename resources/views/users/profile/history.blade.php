@@ -24,7 +24,7 @@
         <table class="min-w-full">
             <thead class="bg-[#f7f9fb] text-sm text-gray-500">
                 <tr>
-                    <th class="px-6 py-4 text-left font-medium">No</th>
+                    <th class="px-6 py-4 text-left font-medium">Kode</th>
                     <th class="px-6 py-4 text-left font-medium">Tanggal Pengajuan</th>
                     <th class="px-6 py-4 text-left font-medium">Jenis Pendidikan</th>
                     <th class="px-6 py-4 text-left font-medium">Jalur</th>
@@ -33,18 +33,40 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($applications as $apps)
                 <tr class="border-t border-gray-100 text-gray-700">
-                    <td class="px-6 py-6">1.</td>
-                    <td class="px-6 py-6">5 September 2025</td>
-                    <td class="px-6 py-6">Mula Dhammasekha</td>
-                    <td class="px-6 py-6">Formal</td>
+                    <td class="px-6 py-6">{{$apps->code}}</td>
+                    <td class="px-6 py-6">{{$apps->created_at->format('d F j')}}</td>
+                    <td class="px-6 py-6">{{ ucfirst($apps->type) }}</td>
+                    <td class="px-6 py-6">{{ ucfirst(str_replace('-', ' ', $apps->form_type)) }}</td>
                     <td class="px-6 py-6">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500 text-white">
-                            Disetujui Pusat
+                         @if($apps->status == 0)
+                            <label class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
+                                Ditinjau
+                            </label>
+                            @elseif($apps->status == 1)
+                            <label class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500 text-white">
+                                Diproses lebih lanjut
+                            </label>
+                            @elseif($apps->status == 2)
+                            <label class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500 text-white">
+                                Disetujui Pusat
+                            </label>
+                            @elseif($apps->status == 3)
+                            <label class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-white">
+                                Ditolak
+                            </label>
+                            @elseif($apps->status == 5)
+                             <label class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-white">
+                                Dibatalkan
+                            </label>
+                            @endif
+                        <span class="">
+                            
                         </span>
                     </td>
                     <td class="px-6 py-6">
-                        <a href="{{ route('user.profile.history.detail') }}" class="inline-flex w-10 h-10 rounded-full border border-gray-200 items-center justify-center hover:bg-gray-50">
+                        <a href="{{ route('user.profile.history.detail', ['uid'=>$apps->uuid]) }}" class="inline-flex w-10 h-10 rounded-full border border-gray-200 items-center justify-center hover:bg-gray-50">
                             <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
@@ -52,6 +74,8 @@
                         </a>
                     </td>
                 </tr>
+                @endforeach
+
             </tbody>
         </table>
     </div>

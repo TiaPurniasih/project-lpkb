@@ -16,10 +16,12 @@
 </div>
 
 @php
-$forms = sipkbForm($form['fields']);
-$doc_type = config('siopkb.file_section');
-$required_sign = '<span class="text-red-600">*</span>';
-$step_index = 0;
+    $forms = sipkbForm($form['fields']);
+    $doc_type = config('siopkb.file_section');
+    $required_sign = '<span class="text-red-600">*</span>';
+    $step_index = 0;
+
+    $profile = auth()->user()->detail;
 @endphp
 
 <form id="izinForm" method="POST" action="{{ route('user.perizinan.submit') }}" enctype="multipart/form-data">
@@ -50,6 +52,7 @@ $step_index = 0;
                             <input  type="text" 
                                     name="{{ $item['name'] }}"
                                     placeholder="{{ $item['placeholder'] }}" 
+                                    value="{{ $profile->{$item['name']} }}"
                                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                     {{ ($item['required'] ? 'required' : '' )}}>
 
@@ -58,6 +61,7 @@ $step_index = 0;
                                 <input type="text" 
                                     placeholder="{{ $item['placeholder'] }}" 
                                     name="{{ $item['name'] }}"
+                                    value="{{ $profile->{$item['name']} }}"
                                     class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                     {{ ($item['required'] ? 'required' : '' )}}>
                                 <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +78,10 @@ $step_index = 0;
                                 <option value="" disabled selected class="text-gray-400">Pilih...</option>
                                 @if($item['options'])
                                 @foreach ($item['options'] as $option)
-                                <option value="{{ $option }}">{{ $option }}</option>
+                                    @php
+                                    $option_val = explode('|', $option);    
+                                    @endphp
+                                <option value="{{ $option_val[0] }}" {{ ($option_val[0] == $profile->{$item['name']} ? 'selected' : '') }}>{{ $option_val[1] }}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -109,8 +116,10 @@ $step_index = 0;
                                 placeholder="{{ $item['placeholder'] }}" 
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                 {{ ($item['required'] ? 'required' : '' )}}
-                                ></textarea>
+                                >{{ $profile->{$item['name']} }}</textarea>
 
+                        @elseif($item['type'] == 'custom_address')
+                            @include('users.components.address-area', ['address_type' => $item['name'], 'profile'=>$profile ])
                         @else
                             {{ $item['type'] }}
                         @endif
@@ -253,5 +262,11 @@ $step_index = 0;
             }
         });
     });
+
+    function resetSelect(names) {
+        names.forEach(function (name) {
+            $('select[name=' + name + ']').html('<option value="">Pilih</option>');
+        });
+    }
 </script>
 @endsection

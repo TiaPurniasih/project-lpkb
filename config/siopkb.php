@@ -6,6 +6,7 @@ return [
             [
                 'title' => 'Nava Dhammasekha',
                 'code' => 'nava-dhammasekha',
+                'codex' => 'FL-NVDMSK',
                 'file_count' => 0, 
                 'description' => 'Pendidikan dasar keagamaan Buddha setingkat sekolah dasar. Persyaratan lengkap mencakup akta notaris, kurikulum, daftar guru, hingga studi kelayakan.',
                 'fields' => [
@@ -22,7 +23,7 @@ return [
                     ],
                     [
                         'type' => 'text',
-                        'name' => 'edu_organization_name',
+                        'name' => 'institution_name',
                         'label' => 'Nama Lembaga Pendidikan',
                         'placeholder' => 'Masukkan nama lembaga pendidikan',
                         'required' => true,
@@ -31,9 +32,9 @@ return [
                         'section' => 'identitas-lembaga',
                         'group' => 1,
                     ],
-                     [
+                    [
                         'type' => 'text',
-                        'name' => 'edu_organization_chief',
+                        'name' => 'institution_head_name',
                         'label' => 'Nama Kepala Lembaga',
                         'placeholder' => 'Masukkan nama kepala lembaga pendidikan',
                         'required' => true,
@@ -42,10 +43,9 @@ return [
                         'section' => 'identitas-lembaga',
                         'group' => 1,
                     ],
-
                     [
                         'type' => 'text',
-                        'name' => 'organization_name',
+                        'name' => 'organizing_body_name',
                         'label' => 'Nama Badan Penyelenggara',
                         'placeholder' => 'Masukkan nama badan penyelenggara',
                         'required' => true,
@@ -57,7 +57,7 @@ return [
                     
                     [
                         'type' => 'text',
-                        'name' => 'edu_organization_phone',
+                        'name' => 'institution_phone',
                         'label' => 'Nomor Telepon Lembaga',
                         'placeholder' => 'Masukkan nomor telpon lembaga pendidikan',
                         'required' => true,
@@ -80,7 +80,7 @@ return [
                     // dok
                     [
                         'type' => 'file',
-                        'name' => 'file_1',
+                        'name' => 'docs_1',
                         'label' => 'Tanda Daftar Yayasan/Perkumpulan dari Kementerian Agama',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -90,7 +90,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_2',
+                        'name' => 'docs_2',
                         'label' => 'AD/ART ',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -98,10 +98,8 @@ return [
                         'page' => 1,
                         'section' => 'dokumen-penyelenggara',
                     ],
-
-                    // Alamat Lembaga Pendidikan
                     [
-                        'type' => 'select',
+                        'type' => 'custom_address',
                         'name' => 'province',
                         'label' => 'Provinsi',
                         'placeholder' => 'Pilih Provinsi',
@@ -110,13 +108,9 @@ return [
                         'page' => 1,
                         'section' => 'alamat-lembaga-pendidikan',
                         'group' => 1,
-                        'options' => [
-                            'Banten',
-                            'DKI Jakarta',
-                        ]
                     ],
                     [
-                        'type' => 'select',
+                        'type' => 'custom_address',
                         'name' => 'city',
                         'label' => 'Kabupaten',
                         'placeholder' => 'Pilih Kabupaten',
@@ -125,40 +119,28 @@ return [
                         'page' => 1,
                         'section' => 'alamat-lembaga-pendidikan',
                         'group' => 2,
-                        'options' => [
-                            'Tangerang',
-                            'Serang',
-                        ]
                     ],
                     [
-                        'type' => 'select',
+                        'type' => 'custom_address',
                         'name' => 'district',
-                        'label' => 'Kabupaten',
+                        'label' => 'Kecamatan',
                         'placeholder' => 'Pilih Kabupaten',
                         'required' => true,
                         'active' => true,
                         'page' => 1,
                         'section' => 'alamat-lembaga-pendidikan',
                         'group' => 1,
-                        'options' => [
-                            'Tangerang',
-                            'Serang',
-                        ]
                     ],
                     [
-                        'type' => 'select',
+                        'type' => 'custom_address',
                         'name' => 'subdistrict',
-                        'label' => 'Kecamatan',
+                        'label' => 'Kelurahan',
                         'placeholder' => 'Pilih Kecamatan',
                         'required' => true,
                         'active' => true,
                         'page' => 1,
                         'section' => 'alamat-lembaga-pendidikan',
                         'group' => 2,
-                        'options' => [
-                            'Tangerang',
-                            'Serang',
-                        ]
                     ],
                     [
                         'type' => 'textarea',
@@ -171,10 +153,9 @@ return [
                         'section' => 'alamat-lembaga-pendidikan',
                         'group' => 1
                     ],
-                    // Sarana & Foto
                     [
                         'type' => 'file',
-                        'name' => 'file_3',
+                        'name' => 'photo_1',
                         'label' => 'Foto Sarpras',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -184,7 +165,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_4',
+                        'name' => 'photo_2',
                         'label' => 'Foto Gedung Depan',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -194,7 +175,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_5',
+                        'name' => 'photo_3',
                         'label' => 'Foto Gedung Samping',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -204,7 +185,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_6',
+                        'name' => 'photo_4',
                         'label' => 'Tambahan Foto Sarpras',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -225,13 +206,15 @@ return [
                         'section' => 'rekening',
                         'group' => 1,
                         'options' => [
-                            'BCA',
-                            'Mandiri',
+                            'BCA|Bank Central Asia (BCA)',
+                            'BRI|Bank Rakyat Indonesia (BRI',
+                            'BNI|Bank Negara Indonesia (BNI)',
+                            'BTN|Bank Tabungan Negara (BTN)',
                         ]
                     ],
                     [
                         'type' => 'text',
-                        'name' => 'account_name',
+                        'name' => 'bank_account',
                         'label' => 'Nomor Rekening',
                         'placeholder' => 'Nomor Rekening',
                         'required' => true,
@@ -253,7 +236,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_7',
+                        'name' => 'docs_3',
                         'label' => 'Upload Foto Rekening',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -264,7 +247,7 @@ return [
                     // PAGE 2
                     [
                         'type' => 'file',
-                        'name' => 'file_8',
+                        'name' => 'docs_4',
                         'label' => 'SK Pengurus Organisasi (struktur & susunan + KTP)',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -274,7 +257,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_9',
+                        'name' => 'docs_5',
                         'label' => 'SK Struktur Manajemen & Personalia Penyelenggara Pendidikan',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -284,7 +267,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_10',
+                        'name' => 'docs_6',
                         'label' => 'Surat Pernyataan Kesanggupan Pembiayaan min. 1 tahun (bermaterai) ',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -294,7 +277,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_11',
+                        'name' => 'docs_7',
                         'label' => 'Dokumen Kurikulum',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -304,7 +287,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_12',
+                        'name' => 'docs_8',
                         'label' => 'Dokumen Rencana Induk Pengembangan (RIP) ',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -314,7 +297,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_13',
+                        'name' => 'docs_9',
                         'label' => 'Daftar Calon Guru + CV + Ijazah terakhir',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -324,7 +307,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_14',
+                        'name' => 'docs_10',
                         'label' => 'SK Pengangkatan Kepala Sekolah + CV + Ijazah terakhir',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -334,7 +317,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_15',
+                        'name' => 'docs_11',
                         'label' => 'Daftar Calon Tenaga Kependidikan + CV + Ijazah terakhir',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -344,7 +327,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_16',
+                        'name' => 'docs_12',
                         'label' => 'Daftar Sarana & Prasarana (detail list)',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -354,7 +337,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_17',
+                        'name' => 'photo_5',
                         'label' => 'Foto Sarana & Prasarana (ruang kelas, fasilitas, dll)',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -364,7 +347,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_18',
+                        'name' => 'photo_6',
                         'label' => 'Sertifikat / surat keterangan kepemilikan/hibah tanah/lahan',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -374,7 +357,7 @@ return [
                     ],
                     [
                         'type' => 'file',
-                        'name' => 'file_19',
+                        'name' => 'photo_7',
                         'label' => 'Dokumen Studi Kelayakan',
                         'placeholder' => 'file (pdf,jpg,png) maks 2 MB',
                         'required' => true,
@@ -388,6 +371,7 @@ return [
             [
                 'title' => 'Mula Dhammasekha',
                 'code' => 'mula-dhammasekha',
+                'codex' => 'FL-MADMSK',
                 'description' => 'Pendidikan keagamaan Buddha setingkat sekolah menengah pertama. Membutuhkan dokumen legalitas badan hukum, kurikulum, sarpras, dan SK pendirian.',
                 'fields' => [
 
@@ -396,6 +380,7 @@ return [
             [
                 'title' => 'Muda Dammasekha',
                 'code' => 'muda-dhammasekha',
+                'codex' => 'FL-MDDMSK',
                 'description' => 'Pendidikan keagamaan Buddha setingkat sekolah menengah atas. Persyaratan meliputi akta notaris, kurikulum, SK pengurus, serta daftar pendidik dan tenaga kependidikan.',
                 'fields' => [
 
@@ -404,6 +389,7 @@ return [
             [
                 'title' => 'Uttama Dhammasekha',
                 'code' => 'uttama-dhammasekha',
+                'codex' => 'FL-UTDMSK',
                 'description' => 'Pendidikan keagamaan Buddha setingkat perguruan tinggi. Dokumen yang diminta mencakup akta notaris, kurikulum, sarpras, SK kepala, hingga rencana induk pengembangan.',
                 'fields' => [
 
@@ -414,18 +400,21 @@ return [
             [
                 'title' => 'Pasastrian',
                 'code' => 'pasastrian',
+                'codex' => 'NF-PSSTRN',
                 'description' => 'Pendidikan nonformal berbasis asrama dengan syarat dokumen strategis: rencana pengembangan, kalender pendidikan, data siswa & pendidik, serta surat kesanggupan biaya 3 tahun.',
                 'fields' => []
             ],
             [
                 'title' => 'Sekolah Minggu Buddha',
                 'code' => 'sekolah-minggu-buddha',
+                'codex' => 'NF-SMBDDH',
                 'description' => 'Pendidikan nonformal untuk anak-anak dan remaja. Persyaratan sederhana berupa SK pengurus, rencana program pendidikan, data peserta, data pendidik, serta surat domisili yayasan.',
                 'fields' => []
             ],
             [
                 'title' => 'Sikkaphana',
                 'code' => 'sikkaphana',
+                'codex' => 'NF-SKKPHN',
                 'description' => 'Pendidikan nonformal bagi komunitas dan masyarakat umum. Dokumen wajib meliputi SK pengurus, rencana strategis, kalender kegiatan, data siswa & tenaga pendidik, serta surat pernyataan keabsahan dokumen.',
                 'fields' => []
             ],
@@ -433,6 +422,30 @@ return [
     ],
     'file_section' => [
         'dokumen-penyelenggara',
-        'sarana-&-Foto'
+        'sarana-&-Foto',
+        'dokumen'
+    ],
+    'file_aliases' =>[
+        'docs_1' => 'Tanda Daftar Yayasan/Perkumpulan dari Kementerian Agama',
+        'docs_2' => 'AD/ART *',
+        'docs_3' => 'Upload Foto Rekening',
+        'photo_1' => 'Foto Sarpras',
+        'photo_2' => 'Foto Gedung Depan',
+        'photo_3' => 'Foto Gedung Samping',
+        'photo_4' => 'Tambahan Foto Sarpras (Opsional)',
+
+        'docs_4' => 'SK Pengurus Organisasi (struktur & susunan + KTP)',
+        'docs_5' => 'SK Struktur Manajemen & Personalia Penyelenggara Pendidikan',
+        'docs_6' => 'Surat Pernyataan Kesanggupan Pembiayaan min. 1 tahun (bermaterai) ',
+        'docs_7' => 'Dokumen Kurikulum',
+        'docs_8' => 'Dokumen Rencana Induk Pengembangan (RIP)',
+        'docs_9' => 'Daftar Calon Guru + CV + Ijazah terakhir',
+        'docs_10' => 'SK Pengangkatan Kepala Sekolah + CV + Ijazah terakhir',
+        'docs_11' => 'Daftar Calon Tenaga Kependidikan + CV + Ijazah terakhir',
+        'docs_12' => 'Daftar Sarana & Prasarana (detail list)',
+
+        'photo_5' => 'Foto Sarana & Prasarana (ruang kelas, fasilitas, dll)',
+        'photo_6' => 'Sertifikat / surat keterangan kepemilikan/hibah tanah/lahan',
+        'photo_7' => 'Dokumen Studi Kelayakan',
     ]
 ];

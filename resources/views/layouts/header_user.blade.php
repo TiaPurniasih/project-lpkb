@@ -9,10 +9,10 @@
                     <div class="w-10 h-10 bg-red-600 rounded flex items-center justify-center">
                         <span class="text-white font-bold text-xl">S</span>
                     </div>
-                    <div class="ml-3">
+                    <a href="/beranda" class="ml-3">
                         <h1 class="text-xl font-bold text-red-600">SIOPKB</h1>
                         <p class="text-xs text-red-600">Sistem Izin Operasional Pendidikan Keagamaan Buddha</p>
-                    </div>
+                    </a>
                 </div>
             </div>
 

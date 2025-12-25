@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FileUploadTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,6 +17,7 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable;
     use \OwenIt\Auditing\Auditable;
     use GeneratesUuid;
+    use FileUploadTrait;
 
     const ROLE_GUEST      = 0;
     const ROLE_USER       = 10;
@@ -72,6 +74,10 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
             self::ROLE_USER       => 'User',
             default               => 'Guest',
         };
+    }
+
+    function detail(){
+        return $this->hasOne(UserDetail::class);
     }
 
 }

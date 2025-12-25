@@ -119,6 +119,43 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <!-- Empty state - no rows shown -->
+                    @foreach ($applications as $apps)
+                    <tr>
+                        <td class="px-6 py-4 text-left text-xs font-medium uppercase ">{{ $apps->code }}</td>
+                        <td class="px-6 py-4 text-left text-xs font-medium uppercase ">{{ $apps->created_at->format('Y-m-d') }}</td>
+                        <td class="px-6 py-4 text-left text-xs font-medium uppercase ">{{ ucfirst($apps->type) }}</td>
+                        <td class="px-6 py-4 text-left text-xs font-medium uppercase ">{{ ucfirst(str_replace('-', ' ', $apps->form_type)) }}</td>
+                        <td class="px-6 py-4 text-left text-xs font-medium uppercase ">
+                            @if($apps->status == 0)
+                            <label class="inline-block px-3 py-1 text-xs font-semibold rounded-full
+                                        bg-yellow-100 text-yellow-800 border border-yellow-300">
+                                Ditinjau
+                            </label>
+                            @elseif($apps->status == 1)
+                            <label class="inline-block px-3 py-1 text-xs font-semibold rounded-full
+                                        bg-green-100 text-green-800 border border-green-300">
+                                Diterima
+                            </label>
+                            @elseif($apps->status == 2)
+                            <label class="inline-block px-3 py-1 text-xs font-semibold rounded-full
+                                        bg-green-100 text-green-800 border border-green-300">
+                                Selesai
+                            </label>
+                            @elseif($apps->status == 3)
+                            <label class="inline-block px-3 py-1 text-xs font-semibold rounded-full
+                                        bg-red-100 text-red-800 border border-red-300">
+                                Ditolak
+                            </label>
+                            @elseif($apps->status == 5)
+                             <label class="inline-block px-3 py-1 text-xs font-semibold rounded-full
+                                        bg-red-100 text-red-800 border border-red-300">
+                                Dibatalkan
+                            </label>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 text-left text-xs font-medium uppercase "></td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

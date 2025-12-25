@@ -29,15 +29,15 @@
     <input type="hidden" id="selected_district" value="{{ $institution->district }}">
     <input type="hidden" id="selected_district_name" value="{{ $institution->district ? explode('|', $institution->district)[1] : '' }}">
 
-    <input type="hidden" id="selected_village" value="{{ $institution->village }}">
+    <input type="hidden" id="selected_village" value="{{ $institution->subdistrict }}">
     <input type="hidden" id="selected_village_name" value="{{ $institution->village ? explode('|', $institution->village)[1] : '' }}">
 
-    <input type="hidden" name="registration_certificate_document_hidden" id="registration_certificate_document_hidden" value="{{ $institution->registration_certificate_document }}">
-    <input type="hidden" name="articles_of_association_document_hidden" id="articles_of_association_document_hidden" value="{{ $institution->articles_of_association_document }}">
-    <input type="hidden" name="facility_photo_hidden" id="facility_photo_hidden" value="{{ $institution->facility_photo }}">
-    <input type="hidden" name="front_building_photo_hidden" id="front_building_photo_hidden" value="{{ $institution->front_building_photo }}">
-    <input type="hidden" name="side_building_photo_hidden" id="side_building_photo_hidden" value="{{ $institution->side_building_photo }}">
-    <input type="hidden" name="bank_account_photo_hidden" id="bank_account_photo_hidden" value="{{ $institution->bank_account_photo }}">
+    <input type="hidden" name="docs_1_hidden" id="docs_1_hidden" value="{{ $institution->docs_1 }}">
+    <input type="hidden" name="docs_2_hidden" id="docs_2_hidden" value="{{ $institution->docs_2 }}">
+    <input type="hidden" name="photo_1_hidden" id="photo_1_hidden" value="{{ $institution->photo_1 }}">
+    <input type="hidden" name="photo_2_hidden" id="photo_2_hidden" value="{{ $institution->photo_2 }}">
+    <input type="hidden" name="photo_3_hidden" id="photo_3_hidden" value="{{ $institution->photo_3 }}">
+    <input type="hidden" name="docs_3_hidden" id="docs_3_hidden" value="{{ $institution->docs_3 }}">
 
     <!-- Section 1: Identitas Lembaga -->
     <div class="mb-8">
@@ -55,9 +55,9 @@
                         <input type="text" 
                                 placeholder="Masukkan nama penanggung jawab" 
                                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                value="{{ old('responsible_person_name', $institution->responsible_person_name) }}"
-                                name="responsible_person_name"
-                                id="responsible_person_name" required>
+                                value="{{ old('pic_name', $institution->pic_name) }}"
+                                name="pic_name"
+                                id="pic_name" required>
                     </div>
 
                     <!-- Nama Lembaga Pendidikan -->
@@ -140,7 +140,7 @@
                         <div class="relative">
                             <input type="text" 
                                     placeholder="Masukkan Tanggal" 
-                                    class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" name="establishment_date" id="establishment_date" value="{{ old('establishment_date', $institution->establishment_date) }}"
+                                    class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" name="established_date" id="established_date" value="{{ old('established_date', $institution->established_date) }}"
                                     required>
                             <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -170,8 +170,7 @@
                 <label class="block text-sm font-medium text-gray-900 mb-2">
                     Alamat Lengkap Badan Penyelenggara <span class="text-red-600">*</span>
                 </label>
-                <textarea rows="4" 
-                        placeholder="Masukkan alamat lengkap badan penyelenggara" 
+                <textarea rows="4"  placeholder="Masukkan alamat lengkap badan penyelenggara" 
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none" name="organizing_body_address" id="organizing_body_address" required>{{ old('organizing_body_address', $institution->organizing_body_address) }}</textarea>
             </div>
         </div>
@@ -190,24 +189,24 @@
                     </label>
                     <div class="relative">
                         <input type="file" 
-                                name="registration_certificate_document" 
-                                id="registration_certificate_document" 
+                                name="docs_1" 
+                                id="docs_1" 
                                 accept=".pdf,.jpg,.jpeg,.png" 
                                 class="hidden"
-                                onchange="handleFileSelect(this, 'registration_certificate_document_preview')">
-                        <label for="registration_certificate_document" class="cursor-pointer">
+                                onchange="handleFileSelect(this, 'docs_1_preview')">
+                        <label for="docs_1" class="cursor-pointer">
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white hover:border-gray-400 transition-colors">
                                 <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                 </svg>
                                 <p class="text-gray-600">Drop files here or click to upload.</p>
-                                <p id="registration_certificate_document_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
+                                <p id="docs_1_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
                             </div>
                         </label>
                     </div>
                     <!-- <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p> -->
-                    @if($institution->registration_certificate_document) <p class="text-sm text-gray-500 mt-2">
-                    File tersedia: <a href="{{ asset($institution->registration_certificate_document) }}" download class="text-blue-600 hover:underline">
+                    @if($institution->docs_1) <p class="text-sm text-gray-500 mt-2">
+                    File tersedia: <a href="{{ asset($institution->docs_1) }}" download class="text-blue-600 hover:underline">
                     Download </a> </p>
                     @else <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p>
                     @endif
@@ -220,24 +219,24 @@
                     </label>
                     <div class="relative">
                         <input type="file" 
-                                name="articles_of_association_document" 
-                                id="articles_of_association_document" 
+                                name="docs_2" 
+                                id="docs_2" 
                                 accept=".pdf,.jpg,.jpeg,.png" 
                                 class="hidden"
-                                onchange="handleFileSelect(this, 'articles_of_association_document_preview')">
-                        <label for="articles_of_association_document" class="cursor-pointer">
+                                onchange="handleFileSelect(this, 'docs_2_preview')">
+                        <label for="docs_2" class="cursor-pointer">
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white hover:border-gray-400 transition-colors">
                                 <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                 </svg>
                                 <p class="text-gray-600">Drop files here or click to upload.</p>
-                                <p id="articles_of_association_document_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
+                                <p id="docs_2_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
                             </div>
                         </label>
                     </div>
                     <!-- <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p> -->
-                    @if($institution->articles_of_association_document) <p class="text-sm text-gray-500 mt-2">
-                    File tersedia: <a href="{{ asset($institution->articles_of_association_document) }}" download class="text-blue-600 hover:underline">
+                    @if($institution->docs_2) <p class="text-sm text-gray-500 mt-2">
+                    File tersedia: <a href="{{ asset($institution->docs_2) }}" download class="text-blue-600 hover:underline">
                     Download </a> </p>
                     @else <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p>
                     @endif
@@ -293,7 +292,8 @@
                             Kecamatan <span class="text-red-600">*</span>
                         </label>
                         <div class="relative">
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="district" id="district" required>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" 
+                                name="district" id="district" required>
                                 <option value="">Pilih Kecamatan</option>
                             </select>
                             <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -344,24 +344,24 @@
                     </label>
                     <div class="relative">
                         <input type="file" 
-                                name="facility_photo" 
-                                id="facility_photo" 
+                                name="photo_1" 
+                                id="photo_1" 
                                 accept=".jpg,.jpeg,.png" 
                                 class="hidden"
-                                onchange="handleFileSelect(this, 'facility_photo_preview')">
-                        <label for="facility_photo" class="cursor-pointer">
+                                onchange="handleFileSelect(this, 'photo_1_preview')">
+                        <label for="photo_1" class="cursor-pointer">
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white hover:border-gray-400 transition-colors">
                                 <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                 </svg>
                                 <p class="text-gray-600">Drop files here or click to upload.</p>
-                                <p id="facility_photo_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
+                                <p id="photo_1_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
                             </div>
                         </label>
                     </div>
                     <!-- <p class="text-sm text-gray-500 mt-2">File (jpg, png) maks 2 MB</p> -->
-                    @if($institution->facility_photo) <p class="text-sm text-gray-500 mt-2">
-                    File tersedia: <a href="{{ asset($institution->facility_photo) }}" download class="text-blue-600 hover:underline">
+                    @if($institution->photo_1) <p class="text-sm text-gray-500 mt-2">
+                    File tersedia: <a href="{{ asset($institution->photo_1) }}" download class="text-blue-600 hover:underline">
                     Download </a> </p>
                     @else <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p>
                     @endif
@@ -374,24 +374,24 @@
                     </label>
                     <div class="relative">
                         <input type="file" 
-                                name="front_building_photo" 
-                                id="front_building_photo" 
+                                name="photo_2" 
+                                id="photo_2" 
                                 accept=".jpg,.jpeg,.png" 
                                 class="hidden"
-                                onchange="handleFileSelect(this, 'front_building_photo_preview')">
-                        <label for="front_building_photo" class="cursor-pointer">
+                                onchange="handleFileSelect(this, 'photo_2_preview')">
+                        <label for="photo_2" class="cursor-pointer">
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white hover:border-gray-400 transition-colors">
                                 <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                 </svg>
                                 <p class="text-gray-600">Drop files here or click to upload.</p>
-                                <p id="front_building_photo_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
+                                <p id="photo_2_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
                             </div>
                         </label>
                     </div>
                     <!-- <p class="text-sm text-gray-500 mt-2">File (jpg, png) maks 2 MB</p> -->
-                    @if($institution->front_building_photo) <p class="text-sm text-gray-500 mt-2">
-                    File tersedia: <a href="{{ asset($institution->front_building_photo) }}" download class="text-blue-600 hover:underline">
+                    @if($institution->photo_2) <p class="text-sm text-gray-500 mt-2">
+                    File tersedia: <a href="{{ asset($institution->photo_2) }}" download class="text-blue-600 hover:underline">
                     Download </a> </p>
                     @else <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p>
                     @endif
@@ -404,24 +404,24 @@
                     </label>
                     <div class="relative">
                         <input type="file" 
-                                name="side_building_photo" 
-                                id="side_building_photo" 
+                                name="photo_3" 
+                                id="photo_3" 
                                 accept=".jpg,.jpeg,.png" 
                                 class="hidden"
-                                onchange="handleFileSelect(this, 'side_building_photo_preview')">
-                        <label for="side_building_photo" class="cursor-pointer">
+                                onchange="handleFileSelect(this, 'photo_3_preview')">
+                        <label for="photo_3" class="cursor-pointer">
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white hover:border-gray-400 transition-colors">
                                 <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                 </svg>
                                 <p class="text-gray-600">Drop files here or click to upload.</p>
-                                <p id="side_building_photo_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
+                                <p id="photo_3_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
                             </div>
                         </label>
                     </div>
                     <!-- <p class="text-sm text-gray-500 mt-2">File (jpg, png) maks 2 MB</p> -->
-                    @if($institution->side_building_photo) <p class="text-sm text-gray-500 mt-2">
-                    File tersedia: <a href="{{ asset($institution->side_building_photo) }}" download class="text-blue-600 hover:underline">
+                    @if($institution->photo_3) <p class="text-sm text-gray-500 mt-2">
+                    File tersedia: <a href="{{ asset($institution->photo_3) }}" download class="text-blue-600 hover:underline">
                     Download </a> </p>
                     @else <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p>
                     @endif
@@ -434,24 +434,24 @@
                     </label>
                     <div class="relative">
                         <input type="file" 
-                                name="facility_photo_extra" 
-                                id="facility_photo_extra" 
+                                name="photo_4" 
+                                id="photo_4" 
                                 accept=".jpg,.jpeg,.png" 
                                 class="hidden"
-                                onchange="handleFileSelect(this, 'facility_photo_extra_preview')">
-                        <label for="facility_photo_extra" class="cursor-pointer">
+                                onchange="handleFileSelect(this, 'photo_4_preview')">
+                        <label for="photo_4" class="cursor-pointer">
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white hover:border-gray-400 transition-colors">
                                 <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                 </svg>
                                 <p class="text-gray-600">Drop files here or click to upload.</p>
-                                <p id="facility_photo_extra_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
+                                <p id="photo_4_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
                             </div>
                         </label>
                     </div>
                     <!-- <p class="text-sm text-gray-500 mt-2">File (jpg, png) maks 2 MB</p> -->
-                    @if($institution->facility_photo_extra) <p class="text-sm text-gray-500 mt-2">
-                    File tersedia: <a href="{{ asset($institution->facility_photo_extra) }}" download class="text-blue-600 hover:underline">
+                    @if($institution->photo_4) <p class="text-sm text-gray-500 mt-2">
+                    File tersedia: <a href="{{ asset($institution->photo_4) }}" download class="text-blue-600 hover:underline">
                     Download </a> </p>
                     @else <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p>
                     @endif
@@ -490,7 +490,7 @@
                     </label>
                     <input type="text" 
                             placeholder="Nomor Rekening" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" name="bank_account_number" id="bank_account_number" value="{{ old('institution_full_address', $institution->institution_full_address) }}">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" name="bank_account" id="bank_account" value="{{ old('bank_account', $institution->bank_account) }}">
                 </div>
 
                 <!-- Cabang Bank -->
@@ -499,7 +499,7 @@
                         Cabang Bank <span class="text-red-600">*</span>
                     </label>
                     <div class="relative">
-                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="bank_branch" id="bank_branch">
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white" name="bank_province" id="bank_province">
                             <option value="">Cabang Bank</option>
                         </select>
                         <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -516,24 +516,24 @@
                 </label>
                 <div class="relative">
                     <input type="file" 
-                            name="bank_account_photo" 
-                            id="bank_account_photo" 
+                            name="docs_3" 
+                            id="docs_3" 
                             accept=".pdf,.jpg,.jpeg,.png" 
                             class="hidden"
-                            onchange="handleFileSelect(this, 'bank_account_photo_preview')">
-                    <label for="bank_account_photo" class="cursor-pointer">
+                            onchange="handleFileSelect(this, 'docs_3_preview')">
+                    <label for="docs_3" class="cursor-pointer">
                         <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white hover:border-gray-400 transition-colors">
                             <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                             </svg>
                             <p class="text-gray-600">Drop files here or click to upload.</p>
-                            <p id="bank_account_photo_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
+                            <p id="docs_3_preview" class="text-sm text-gray-500 mt-2 hidden"></p>
                         </div>
                     </label>
                 </div>
                 <!-- <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p> -->
-                @if($institution->facility_photo_extra) <p class="text-sm text-gray-500 mt-2">
-                File tersedia: <a href="{{ asset($institution->facility_photo_extra) }}" download class="text-blue-600 hover:underline">
+                @if($institution->photo_4) <p class="text-sm text-gray-500 mt-2">
+                File tersedia: <a href="{{ asset($institution->photo_4) }}" download class="text-blue-600 hover:underline">
                 Download </a> </p>
                 @else <p class="text-sm text-gray-500 mt-2">file (pdf,jpg,png) maks 2 MB</p>
                 @endif
@@ -565,7 +565,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        flatpickr("#establishment_date", {
+        flatpickr("#established_date", {
             dateFormat: "Y-m-d",
             allowInput: true
         });
@@ -586,28 +586,28 @@
 
         function checkFormStatus() {
             let fields = [
-                'responsible_person_name', 
+                'pic_name', 
                 'institution_name', 
                 'institution_head_name',
                 'organizing_body_name', 
                 'institution_phone', 
-                'establishment_date',
+                'established_date',
                 'organizing_body_address',
-                'registration_certificate_document', 
-                'articles_of_association_document',
+                'docs_1', 
+                'docs_2',
                 'province', 
                 'city', 
                 'district', 
                 'village', 
                 'institution_full_address',
-                'facility_photo', 
-                'front_building_photo', 
-                'side_building_photo', 
-                // 'facility_photo_extra',
+                'photo_1', 
+                'photo_2', 
+                'photo_3', 
+                // 'photo_4',
                 'bank_name', 
-                'bank_account_number', 
-                'bank_branch', 
-                'bank_account_photo'
+                'bank_account', 
+                'bank_province', 
+                'docs_3'
             ];
 
             let allFilled = true;
@@ -729,6 +729,7 @@
             $("#selected_district_name").val(name);
 
             selectedVillage = $("#selected_village").val();
+            console.log(selectedVillage);
             $("#village").html('<option value="">Loading...</option>');
 
             if (!id) {
@@ -767,7 +768,7 @@
     
     $(document).ready(function() {
         const selectedBank = "{{ $institution->bank_name ?? '' }}";
-        const selectedBranch = "{{ $institution->bank_branch ?? '' }}";
+        const selectedBranch = "{{ $institution->bank_province ?? '' }}";
 
         $("#bank_name").html(`<option value="">Pilih Bank</option>`);
         banks.forEach(bank => {
@@ -776,11 +777,11 @@
         });
 
         $.getJSON("/api/provinces", function (response) {
-            $("#bank_branch").html('<option value="">Pilih Cabang (Provinsi)</option>');
+            $("#bank_province").html('<option value="">Pilih Cabang (Provinsi)</option>');
 
             $.each(response.data, function (index, prov) {
                 let selected = String(prov.code) === String(selectedBranch) ? "selected" : "";
-                $("#bank_branch").append(
+                $("#bank_province").append(
                     `<option value="${prov.code}" ${selected}>${prov.name}</option>`
                 );
             });

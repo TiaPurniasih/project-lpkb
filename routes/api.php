@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\WilayahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/provinces', [WilayahController::class, 'provinces']);
+Route::get('/regencies/{province}', [WilayahController::class, 'regencies']);
+Route::get('/districts/{regency}', [WilayahController::class, 'districts']);
+Route::get('/villages/{district}', [WilayahController::class, 'villages']);
