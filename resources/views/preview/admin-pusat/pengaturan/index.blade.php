@@ -1,4 +1,4 @@
-@extends('admin-pusat.layouts.app')
+@extends('preview.admin-pusat.layouts.app')
 
 @section('title', 'Pengaturan Website')
 

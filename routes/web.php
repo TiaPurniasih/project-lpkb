@@ -63,19 +63,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/manage/users/form/{id?}', [UserController::class, 'form'])->name('cms.manage.users.form');
         Route::get('/manage/users/view/{id}', [UserController::class, 'form'])->name('cms.manage.users.view');
         Route::post('/manage/users/form', [UserController::class, 'store'])->name('cms.manage.users.store');
+        Route::post('/manage/users/delete', [UserController::class, 'delete'])->name('cms.manage.users.destroy');
 
         Route::middleware('role.level:' . User::ROLE_ADMIN)->group(function () {
-            Route::get('/kanwil', [KanwilController::class, 'index'])->name('cms.kanwil');
-            Route::get('/kanwil/datatable', [KanwilController::class, 'datatable'])->name('cms.kanwil.datatable');
-            Route::get('/kanwil/form/{id?}', [KanwilController::class, 'form'])->name('cms.kanwil.form');
-            Route::get('/kanwil/view/{id}', [KanwilController::class, 'form'])->name('cms.kanwil.view');
-            Route::post('/kanwil/form', [KanwilController::class, 'store'])->name('cms.kanwil.store');
-
-            Route::get('/manage/kanwil', [UserController::class, 'index'])->name('cms.manage.kanwil');
-            Route::get('/manage/kanwil/datatable', [UserController::class, 'datatable'])->name('cms.manage.kanwil.datatable');
-            Route::get('/manage/kanwil/form/{id?}', [UserController::class, 'form'])->name('cms.manage.kanwil.form');
-            Route::get('/manage/kanwil/view/{id}', [UserController::class, 'form'])->name('cms.manage.kanwil.view');
-            Route::post('/manage/kanwil/form', [UserController::class, 'store'])->name('cms.manage.kanwil.store');
+            Route::get('/manage/kanwil', [KanwilController::class, 'index'])->name('cms.manage.kanwil');
+            Route::get('/manage/kanwil/datatable', [KanwilController::class, 'datatable'])->name('cms.manage.kanwil.datatable');
+            Route::get('/manage/kanwil/form/{id?}', [KanwilController::class, 'form'])->name('cms.manage.kanwil.form');
+            Route::get('/manage/kanwil/view/{id}', [KanwilController::class, 'form'])->name('cms.manage.kanwil.view');
+            Route::post('/manage/kanwil/form', [KanwilController::class, 'store'])->name('cms.manage.kanwil.store');
         });
         Route::middleware('role.level:' . User::ROLE_SUPERADMIN)->group(function () {
 
@@ -150,25 +145,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('/preview/pemohon.uttama-dhammasekha-page2');
         })->name('uttama-dhammasekha.page2');
 
-        Route::view('/preview/admin-pusat/dashboard', 'admin-pusat.dashboard')
+        Route::view('/admin-pusat/dashboard', 'preview.admin-pusat.dashboard')
             ->name('admin-pusat.dashboard');
 
-        Route::view('/preview/admin-pusat/pengajuan-perizinan', 'admin-pusat.pengajuan-perizinan.index')
+        Route::view('/admin-pusat/pengajuan-perizinan', 'preview.admin-pusat.pengajuan-perizinan.index')
             ->name('admin-pusat.pengajuan-perizinan.index');
 
-        Route::view('/preview/admin-pusat/pengajuan-perizinan/riwayat', 'admin-pusat.pengajuan-perizinan.history')
+        Route::view('/admin-pusat/pengajuan-perizinan/riwayat', 'preview.admin-pusat.pengajuan-perizinan.history')
             ->name('admin-pusat.pengajuan-perizinan.history');
 
-        Route::view('/preview/admin-pusat/manajemen-sertifikat', 'admin-pusat.manajemen-sertifikat.index')
+        Route::view('/admin-pusat/manajemen-sertifikat', 'preview.admin-pusat.manajemen-sertifikat.index')
             ->name('admin-pusat.manajemen-sertifikat.index');
 
-        Route::view('/preview/admin-pusat/manajemen-kanwil', 'admin-pusat.manajemen-kanwil.index')
+        Route::view('/admin-pusat/manajemen-kanwil', 'preview.admin-pusat.manajemen-kanwil.index')
             ->name('admin-pusat.manajemen-kanwil.index');
 
-        Route::view('/preview/admin-pusat/manajemen-kanwil/tambah', 'admin-pusat.manajemen-kanwil.create')
+        Route::view('/admin-pusat/manajemen-kanwil/tambah', 'preview.admin-pusat.manajemen-kanwil.create')
             ->name('admin-pusat.manajemen-kanwil.create');
 
-        Route::view('/preview/admin-pusat/pengaturan', 'admin-pusat.pengaturan.index')
+        Route::view('/admin-pusat/pengaturan', 'preview.admin-pusat.pengaturan.index')
             ->name('admin-pusat.pengaturan.index');
 
         Route::get('/preview/admin-pusat/pengajuan-perizinan/{submission}', function ($submission) {

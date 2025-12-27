@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\Models\User;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,18 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $user = Auth::user();
+
+        // Redirect berdasarkan role
+        if ($user->hasLevel(User::ROLE_ADMIN) ||
+            $user->hasLevel(User::ROLE_SUPERADMIN) ||
+            $user->hasLevel(User::ROLE_KANWIL)) {
+                
+            return redirect()->intended('/cms/dashboard');
+        }
+
+
+        return redirect()->intended('/beranda');
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

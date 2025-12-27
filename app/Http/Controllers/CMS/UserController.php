@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
+
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\User;
 use Hash;
@@ -19,8 +21,66 @@ class UserController extends Controller
         return view('cms.pages.manages.users.index');
     }
 
-    public function datatable(Request $request) {
-        $user  = User::where('role_level', '<', $request->user()->role_level );
+    public function datatable(Request $request)
+    {
+        $perPage = $request->get('per_page', 10);
+        $search  = $request->get('search');
+        $category  = $request->get('category');
+
+        if($request->user()->role_level < 100){
+            $query = User::where('role_level', '<', $request->user()->role_level)
+                ->with('detail');
+        }else{
+            $query = User::with('detail');
+        }
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        if ($category) {
+            $query->where('role_level', $category);
+        }
+
+        $users = $query->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+
+        $data = $users->map(function ($user) {
+            return [
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_active' => $user->is_active
+                    ? '<span class="inline-flex rounded-full px-3 py-0.5 text-sm bg-green-100 text-green-800">Aktif</span>'
+                    : '<span class="inline-flex rounded-full px-3 py-0.5 text-sm bg-gray-200 text-gray-600">Tidak Aktif</span>',
+
+                'organization' => $user->role_level == 10
+                    ? ($user->detail && $user->detail->is_complete
+                        ? '<span class="rounded-full px-3 py-0.5 text-sm bg-green-100 text-green-800">Lengkap</span>'
+                        : '<span class="rounded-full px-3 py-0.5 text-sm bg-gray-200 text-gray-600">Belum lengkap</span>')
+                    : '-',
+
+                'created_at' => $user->created_at->format('Y-m-d H:i:s'),
+
+                'action' => view('cms.components.action-buttons', compact('user'))->render(),
+            ];
+        });
+
+        return response()->json([
+            'data' => $data,
+            'meta' => [
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'per_page' => $users->perPage(),
+                'total' => $users->total(),
+            ]
+        ]);
+    }
+
+    public function __disabled__datatable(Request $request) {
+        $user  = User::where('role_level', '<', $request->user()->role_level )->with('detail');
 
         return DataTables::of($user)
             ->editColumn('created_at', function($user) {
@@ -32,6 +92,18 @@ class UserController extends Controller
                 }else{
                     return '<span class="inline-flex items-center rounded-full px-3 py-0.5 text-sm font-medium bg-gray-200 text-gray-600">Tidak Aktif</span>';
                 }
+            })
+            ->addColumn('organization', function($user) {
+                if($user->role_level == 10 ){
+                    if($user->detail){
+                        return ($user->detail->is_complete? '<span class="rounded-full px-3 py-0.5 text-sm font-medium bg-green-100 text-green-800">Lengkap</span>' : '<span class="rounded-full px-3 py-0.5 text-sm font-medium bg-gray-200 text-gray-600">Belum lengkap</span>');
+                    }else{
+                        return '<span class="rounded-full px-3 py-0.5 text-sm font-medium bg-gray-200 text-gray-600">Belum lengkap</span>'   ;
+                    }
+                }else{
+                    return '-';
+                }
+                
             })
             ->addColumn('action', function($user) {
                 // return '<a href="'.route('cms.manage.users.form', $user->id).'" class="">Edit</a>';
@@ -54,7 +126,7 @@ class UserController extends Controller
                 $html = $html.'</div>';
                 
             })
-             ->rawColumns(['action', 'is_active'])
+             ->rawColumns(['action', 'is_active', 'organization'])
             ->make(true);
     }
 
@@ -64,6 +136,11 @@ class UserController extends Controller
         }else{
             $user = new User;
         }
+
+        $data['wilayah'] = DB::table('regions')
+            ->whereRaw("LENGTH(code) = 2")
+            ->orderBy('name')
+            ->get(['code', 'name']);
 
         $data['user'] = $user;
 
