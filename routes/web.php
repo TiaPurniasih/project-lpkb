@@ -64,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/manage/users/view/{id}', [UserController::class, 'view'])->name('cms.manage.users.view');
         Route::post('/manage/users/status', [UserController::class, 'statusProc'])->name('cms.manage.users.status');
         Route::post('/manage/users/form', [UserController::class, 'store'])->name('cms.manage.users.store');
+        Route::post('/manage/users/lembaga', [UserController::class, 'doLembaga'])->name('cms.manage.users.lembaga');
+        Route::post('/manage/users/kanwil', [UserController::class, 'doKanwil'])->name('cms.manage.users.kanwil');
         Route::post('/manage/users/delete', [UserController::class, 'delete'])->name('cms.manage.users.destroy');
 
         Route::middleware('role.level:' . User::ROLE_ADMIN)->group(function () {

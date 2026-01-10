@@ -3,6 +3,9 @@
 @section('contents')
 
 <section class="space-y-6">
+    @php
+    use App\Models\User;
+    @endphp
     <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
             <h1 class="text-2xl font-semibold text-gray-900">Detail User</h1>
@@ -80,8 +83,16 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    @if($user->hasLevel(User::ROLE_USER))
+    <div class="rounded-3xl bg-white p-6 shadow-sm">
+        <h2 class="text-base font-semibold text-gray-900">Informasi Lembaga</h2>
+        <p>Perlu ditampilkan data terkait</p>
 
     </div>
+    @elseif($user->hasLevel(User::ROLE_KANWIL))
+    @endif
+
 </section>
 
 
