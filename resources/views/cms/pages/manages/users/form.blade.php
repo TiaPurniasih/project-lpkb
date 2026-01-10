@@ -5,20 +5,27 @@
  <section class="space-y-6">
     <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
+            @if($user->id)
+            <h1 class="text-2xl font-semibold text-gray-900">Ubah User</h1>
+            @else
             <h1 class="text-2xl font-semibold text-gray-900">Tambah User</h1>
-            <p class="text-sm text-gray-500">Lengkapi data akun dibawah ini.</p>
+            @endif
         </div>
         <nav class="text-sm text-gray-500">
             <a href="{{ route('cms.manage.users') }}" class="text-gray-400 hover:text-gray-600">
                 Manajemen User
             </a>
             <span class="mx-2 text-gray-300">›</span>
+            @if($user->id)
+            <span class="font-medium text-gray-900">Ubah User</span>
+            @else
             <span class="font-medium text-gray-900">Tambah User</span>
+            @endif
         </nav>
     </div>
 
     <div class="rounded-3xl bg-white p-6 shadow-sm">
-        <h2 class="text-base font-semibold text-gray-900">Identitas Lembaga</h2>
+        <h2 class="text-base font-semibold text-gray-900">Informasi Akun</h2>
 
         <form action="{{ route('cms.manage.users.store') }}" method="POST" class="mt-6 space-y-6">
             <input type="hidden" name="user_id" value="{{ $user->id }}">
@@ -33,11 +40,17 @@
                 <label class="space-y-2">
                     <span class="text-sm font-medium text-gray-700">Email <span class="text-red-500">*</span></span>
                     <div class="relative">
-                        <input type="text" placeholder="Masukkan Nama" name="email" value="{{ $user->email }}" class="w-full appearance-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                        <input type="text" placeholder="Masukkan Email" name="email" value="{{ $user->email }}" class="w-full appearance-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
                     </div>
                 </label>
                 <label class="space-y-2">
-                    <span class="text-sm font-medium text-gray-700">Password <span class="text-red-500">*</span></span>
+                    <span class="text-sm font-medium text-gray-700">Phone <span class="text-red-500">*</span></span>
+                    <div class="relative">
+                        <input type="text" placeholder="Masukkan Phone" name="phone" value="{{ $user->phone }}" class="w-full appearance-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                    </div>
+                </label>
+                <label class="space-y-2">
+                    <span class="text-sm font-medium text-gray-700">Password {{ (!$user->id ? '<span class="text-red-500">*</span>' : '') }}</span>
                     <div class="relative">
                         <input type="password" placeholder="********" name="password" value="" class="w-full appearance-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
                     </div>
@@ -72,6 +85,36 @@
                         <small class="text-gray-400">Role hanya bisa diset SATU KALI, dan tidak bisa diubah setelahnya</small>
                     </div>
                 </label>
+                <div 
+                    x-data="{ active: {{ $user->is_active ? 'true' : 'false' }} }"
+                    class="space-y-2">
+                    <span class="text-sm font-medium text-gray-700">
+                        Status Akun <span class="text-red-500">*</span>
+                    </span>
+
+                    <div class="flex items-center gap-3">
+                        <!-- Toggle -->
+                        <button
+                            type="button"
+                            @click="active = !active"
+                            class="flex h-7 w-12 items-center rounded-full p-1 transition-colors duration-300"
+                            :class="active ? 'bg-[#EE4D37] justify-end' : 'bg-gray-200 justify-start'"
+                        >
+                            <span class="h-5 w-5 rounded-full bg-white transition-transform duration-300"></span>
+                        </button>
+
+                        <!-- Text -->
+                        <span 
+                            class="text-sm font-medium"
+                            :class="active ? 'text-[#EE4D37]' : 'text-gray-500'"
+                            x-text="active ? 'Active' : 'Inactive'"
+                        ></span>
+
+                        <!-- Hidden input -->
+                        <input type="hidden" name="is_active" :value="active ? 1 : 0">
+                    </div>
+                </div>
+
 
                 <label class="space-y-2 hidden" id="wilayah">
                     <span class="text-sm font-medium text-gray-700">Wilayah <span class="text-red-500">*</span></span>
@@ -81,7 +124,6 @@
                             <option value="{{ $region->code }}">{{ $region->name }}</option>
                             @endforeach
                         </select>
-                         
                     </div>
                 </label>
             </div>

@@ -1,6 +1,9 @@
 @extends('layouts.cms.master')
 
 @section('contents')
+@php
+use App\Models\User;
+@endphp
 <!-- <div class="px-4 mx-auto max-w-(--breakpoint-2xl) md:p-6"> -->
     <!-- Breadcrumb Start -->
     <div x-data="{ pageName: `Pengaturan User`}">
@@ -48,18 +51,21 @@
                             class="category  category-active bg-[#EE4D37] text-white border-[#EE4D37] rounded-xl px-4 py-2 text-sm font-semibold">
                             Semua
                         </button>
-
+                        @if(auth()->user()->hasLevel(User::ROLE_SUPERADMIN))
                         <button
                             data-role="80"
                             class="category category-default rounded-xl px-4 py-2 text-sm font-semibold">
                             Administrator
                         </button>
+                        @endif
 
+                        @if(auth()->user()->hasLevel(User::ROLE_ADMIN))
                         <button
                             data-role="50"
                             class="category category-default rounded-xl px-4 py-2 text-sm font-semibold">
                             Kanwil
                         </button>
+                        @endif
 
                         <button
                             data-role="10"
@@ -71,7 +77,6 @@
                 <!-- ====== Table Six Start -->
                 <div class="max-w-full overflow-x-auto">
                     <table class="w-full" id="users-table" >
-                        
                         <thead>
                             <tr class="border-b border-gray-100 dark:border-gray-800">
                                 <th class="px-5 py-3 sm:px-6">
@@ -98,6 +103,13 @@
                                 <th class="px-5 py-3 sm:px-6">
                                     <div class="flex items-center">
                                         <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
+                                            Role
+                                        </p>
+                                    </div>
+                                </th>
+                                <th class="px-5 py-3 sm:px-6">
+                                    <div class="flex items-center">
+                                        <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
                                             Status Lembaga
                                         </p>
                                     </div>
@@ -118,8 +130,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody id="users-table-body" class="divide-y divide-gray-100 dark:divide-gray-800">
-                        </tbody>
+                        <tbody id="users-table-body" class="divide-y divide-gray-100 dark:divide-gray-800"></tbody>
                     </table>
 
                     <div class="flex items-center">
@@ -156,6 +167,7 @@
             'name',
             'email',
             'is_active',
+            'role_level',
             'organization',
             'created_at',
             'action'

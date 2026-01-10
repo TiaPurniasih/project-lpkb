@@ -61,7 +61,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/manage/users', [UserController::class, 'index'])->name('cms.manage.users');
         Route::get('/manage/users/datatable', [UserController::class, 'datatable'])->name('cms.manage.users.datatable');
         Route::get('/manage/users/form/{id?}', [UserController::class, 'form'])->name('cms.manage.users.form');
-        Route::get('/manage/users/view/{id}', [UserController::class, 'form'])->name('cms.manage.users.view');
+        Route::get('/manage/users/view/{id}', [UserController::class, 'view'])->name('cms.manage.users.view');
+        Route::post('/manage/users/status', [UserController::class, 'statusProc'])->name('cms.manage.users.status');
         Route::post('/manage/users/form', [UserController::class, 'store'])->name('cms.manage.users.store');
         Route::post('/manage/users/delete', [UserController::class, 'delete'])->name('cms.manage.users.destroy');
 

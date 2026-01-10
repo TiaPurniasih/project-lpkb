@@ -36,14 +36,13 @@ class AuthenticatedSessionController extends Controller
         if ($user->hasLevel(User::ROLE_ADMIN) ||
             $user->hasLevel(User::ROLE_SUPERADMIN) ||
             $user->hasLevel(User::ROLE_KANWIL)) {
-                
-            return redirect()->intended('/cms/dashboard');
+                // dd($user);
+            return redirect()->route('cms.dashboard');
         }
 
 
-        return redirect()->intended('/beranda');
+        return redirect()->route('user.dashboard');
 
-        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

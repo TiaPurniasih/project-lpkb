@@ -71,7 +71,7 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
             self::ROLE_SUPERADMIN => 'Super Admin',
             self::ROLE_ADMIN      => 'Admin',
             self::ROLE_KANWIL     => 'Kanwil',
-            self::ROLE_USER       => 'User',
+            self::ROLE_USER       => 'Umum',
             default               => 'Guest',
         };
     }

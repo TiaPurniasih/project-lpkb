@@ -29,7 +29,7 @@ class AjaxTable {
         data.forEach(row => {
             html += '<tr>';
             this.columns.forEach(col => {
-                html += `<td class="px-5 py-4">${row[col]}</td>`;
+                html += `<td class="text-sm px-5 py-4">${row[col]}</td>`;
             });
             html += '</tr>';
         });

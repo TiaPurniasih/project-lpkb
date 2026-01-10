@@ -52,14 +52,15 @@ class UserController extends Controller
             return [
                 'name' => $user->name,
                 'email' => $user->email,
+                'role_level' => $user->roleName(),
                 'is_active' => $user->is_active
                     ? '<span class="inline-flex rounded-full px-3 py-0.5 text-sm bg-green-100 text-green-800">Aktif</span>'
-                    : '<span class="inline-flex rounded-full px-3 py-0.5 text-sm bg-gray-200 text-gray-600">Tidak Aktif</span>',
+                    : '<span class="inline-flex rounded-full px-3 py-0.5 text-sm bg-red-500 text-white">Nonaktif</span>',
 
                 'organization' => $user->role_level == 10
                     ? ($user->detail && $user->detail->is_complete
                         ? '<span class="rounded-full px-3 py-0.5 text-sm bg-green-100 text-green-800">Lengkap</span>'
-                        : '<span class="rounded-full px-3 py-0.5 text-sm bg-gray-200 text-gray-600">Belum lengkap</span>')
+                        : '<span class="rounded-full px-3 py-0.5 text-sm bg-gray-200 text-gray-600">Belum</span>')
                     : '-',
 
                 'created_at' => $user->created_at->format('Y-m-d H:i:s'),
@@ -147,6 +148,35 @@ class UserController extends Controller
         return view('cms.pages.manages.users.form', $data);
     }
 
+    function view(Request $request, $id) {
+        $user = User::findOrFail($id);
+
+        $data['wilayah'] = DB::table('regions')
+            ->whereRaw("LENGTH(code) = 2")
+            ->orderBy('name')
+            ->get(['code', 'name']);
+
+        $data['user'] = $user;
+
+        return view('cms.pages.manages.users.view', $data);
+    }
+
+    function statusProc(Request $request)  {
+        try {
+            $user = User::find($request->id);
+            $user->is_active = $request->is_active;
+            $user->save();
+            $status = "success";
+            $msg = "Berhasil";
+        } catch (\Throwable $th) {
+            $msg = "Gagal";
+            $status = "error";
+
+        }
+
+        return redirect()->route('cms.manage.users.view', $request->id)->with($status, $msg);
+
+    }
     function store(Request $request) {
         try{
             if($request->user_id){
@@ -157,10 +187,12 @@ class UserController extends Controller
 
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->is_active = $request->is_active;
             if($request->has('password')){
                 $user->password = Hash::make($request->password);
             }
-            $user->role_level = $request->role_level;
+            // $user->role_level = $request->role_level;
             $user->save();
 
             $msg = "Berhasil";
@@ -169,10 +201,9 @@ class UserController extends Controller
             $msg = "Galat: ". $e->getMessage();
             $status = "error";
         }
-     
         
 
-        return redirect('/manage/users')->with($status, $msg);
+        return redirect()->route('cms.manage.users')->with($status, $msg);
     }
     
 }

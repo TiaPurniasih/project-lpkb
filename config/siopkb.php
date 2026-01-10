@@ -447,5 +447,6 @@ return [
         'photo_5' => 'Foto Sarana & Prasarana (ruang kelas, fasilitas, dll)',
         'photo_6' => 'Sertifikat / surat keterangan kepemilikan/hibah tanah/lahan',
         'photo_7' => 'Dokumen Studi Kelayakan',
+        
     ]
 ];
