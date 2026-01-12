@@ -14,8 +14,12 @@ use App\Models\PermitApplication;
 
 class ProfileController extends Controller
 {
-    function lembaga(Request $request) {
-        $data['institution'] = $request->user()->detail;
+   function lembaga(Request $request) {
+        if($request->user()->detail){
+            $data['institution'] = $request->user()->detail;
+        }else{
+             $data['institution'] = new UserDetail;
+        }
         
         return view('users.profile.lembaga', $data);
     }

@@ -28,4 +28,8 @@ class PermitApplication extends Model implements Auditable
     // protected $casts = [
     //     'establishment_date' => 'date',
     // ];
+
+    function user(){
+        return $this->belongsTo(User::class);
+    }
 }

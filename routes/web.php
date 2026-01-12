@@ -6,6 +6,8 @@ use App\Http\Controllers\USER\PerizinanController;
 use App\Http\Controllers\CMS\DashboardController as DashboardCmsController;
 use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\KanwilController;
+use App\Http\Controllers\CMS\PermitController;
+use App\Http\Controllers\CMS\CertificateController;
 use App\Http\Controllers\TemplateControllers;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -67,6 +69,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/manage/users/lembaga', [UserController::class, 'doLembaga'])->name('cms.manage.users.lembaga');
         Route::post('/manage/users/kanwil', [UserController::class, 'doKanwil'])->name('cms.manage.users.kanwil');
         Route::post('/manage/users/delete', [UserController::class, 'delete'])->name('cms.manage.users.destroy');
+
+        Route::get('/manage/permits', [PermitController::class, 'index'])->name('cms.manage.permit');
+        Route::get('/manage/permits/datatable', [PermitController::class, 'datatable'])->name('cms.manage.permit.datatable');
+        Route::get('/manage/permits/form/{id?}', [PermitController::class, 'form'])->name('cms.manage.permit.form');
+        Route::get('/manage/permits/view/{id}', [PermitController::class, 'view'])->name('cms.manage.permit.view');
+        Route::post('/manage/permits/status', [PermitController::class, 'statusProc'])->name('cms.manage.permit.status');
+        Route::post('/manage/permits/form', [PermitController::class, 'store'])->name('cms.manage.permit.store');
+        Route::post('/manage/permits/delete', [PermitController::class, 'delete'])->name('cms.manage.permit.destroy');
+        
+        Route::get('/manage/certificates', [CertificateController::class, 'index'])->name('cms.manage.certificate');
+        Route::get('/manage/certificates/datatable', [CertificateController::class, 'datatable'])->name('cms.manage.certificate.datatable');
+        Route::get('/manage/certificates/form/{id?}', [CertificateController::class, 'form'])->name('cms.manage.certificate.form');
+        Route::get('/manage/certificates/view/{id}', [CertificateController::class, 'view'])->name('cms.manage.certificate.view');
+        Route::post('/manage/certificates/status', [CertificateController::class, 'statusProc'])->name('cms.manage.certificate.status');
+        Route::post('/manage/certificates/form', [CertificateController::class, 'store'])->name('cms.manage.certificate.store');
+        Route::post('/manage/certificates/delete', [CertificateController::class, 'delete'])->name('cms.manage.certificate.destroy');
+
 
         Route::middleware('role.level:' . User::ROLE_ADMIN)->group(function () {
             Route::get('/manage/kanwil', [KanwilController::class, 'index'])->name('cms.manage.kanwil');

@@ -49,6 +49,12 @@ class UserController extends Controller
             ->paginate($perPage);
 
         $data = $users->map(function ($user) {
+            $actions = [
+                'id' => $user->id,
+                'route_view' => 'cms.manage.users.view',
+                'route_edit' => 'cms.manage.users.form',
+                'route_delete' => 'cms.manage.users.destroy',
+            ];
             return [
                 'name' => $user->name,
                 'email' => $user->email,
@@ -65,7 +71,7 @@ class UserController extends Controller
 
                 'created_at' => $user->created_at->format('Y-m-d H:i:s'),
 
-                'action' => view('cms.components.action-buttons', compact('user'))->render(),
+                'action' => view('cms.components.action-buttons', compact('user', 'actions'))->render(),
             ];
         });
 

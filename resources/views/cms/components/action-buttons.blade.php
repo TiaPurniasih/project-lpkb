@@ -1,6 +1,7 @@
 <div class="inline-flex items-center shadow-theme-xs">
+    @if($actions['route_view'])
     {{-- View --}}
-    <a href="{{ route('cms.manage.users.view', $user->id) }}"
+    <a href="{{ route($actions['route_view'], $actions['id']) }}"
        class="-ml-px inline-flex items-center gap-2 px-3 py-3 text-sm font-medium
               border border-solid ring-dark-500 rounded-l-lg
               hover:bg-brand-500 hover:text-white">
@@ -14,9 +15,11 @@
             <circle cx="12" cy="12" r="3"/>
         </svg>
     </a>
+    @endif
 
+    @if($actions['route_edit'])
     {{-- Edit --}}
-    <a href="{{ route('cms.manage.users.form', $user->id) }}"
+    <a href="{{ route($actions['route_edit'], $actions['id']) }}"
        class="-ml-px inline-flex items-center gap-2 px-3 py-3 text-sm font-medium
               border border-solid ring-dark-500
               hover:bg-brand-500 hover:text-white">
@@ -30,11 +33,13 @@
                      l.84-2.873a2 2 0 0 1 .506-.852z"/>
         </svg>
     </a>
+    @endif
 
     {{-- Delete (Native Laravel) --}}
-    <form action="{{ route('cms.manage.users.destroy', $user->id) }}"
+    @if($actions['route_delete'])
+    <form action="{{ route($actions['route_delete'], $actions['id']) }}"
           method="POST"
-          onsubmit="return confirm('Yakin ingin menghapus user ini?')"
+          onsubmit="return confirm('Yakin ingin menghapus data ini?')"
           class="-ml-px">
         @csrf
         @method('DELETE')
@@ -52,4 +57,6 @@
             </svg>
         </button>
     </form>
+    @endif
+
 </div>

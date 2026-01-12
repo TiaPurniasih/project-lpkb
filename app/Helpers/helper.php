@@ -29,5 +29,30 @@ if (!function_exists('sipkbForm')) {
 
         return $result;
     }
+}
+
+if (!function_exists('getForm')) {
+   function getForm($type, $form_type, $keyword){
+        $config = config('siopkb.form_type.'.$type);
+
+        $formulir = null;
+        foreach ($config as $value) {
+            if($value['code'] == $form_type){
+                $formulir = $value;
+            }
+        }
+
+        if($formulir['fields']){
+            $fields = $formulir['fields'];
+            foreach ($fields as $fkey => $field) {
+                if($field['name'] == $keyword){
+                    return $field;
+                }
+            }
+        }
+
+        return null;
+    
+   }
 
 }

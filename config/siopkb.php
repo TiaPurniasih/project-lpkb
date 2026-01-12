@@ -448,5 +448,13 @@ return [
         'photo_6' => 'Sertifikat / surat keterangan kepemilikan/hibah tanah/lahan',
         'photo_7' => 'Dokumen Studi Kelayakan',
         
+    ],
+    'state' => [
+        '0' => 'Menunggu',
+        '1' => 'Ditinjau',
+        '2' => 'Disetujui',
+        '3' => 'Selesai',
+        '4' => 'Ditolak',
+        '5' => 'Perbaikan'
     ]
 ];
