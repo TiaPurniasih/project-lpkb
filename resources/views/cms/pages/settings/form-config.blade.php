@@ -1,65 +1,46 @@
 @extends('layouts.cms.master')
 
 @section('contents')
-@php
-    $wilayahList = [
-        [
-            'no' => 1,
-            'nama' => 'Kanwil Jawa Barat',
-            'provinsi' => 'Jawa Barat',
-            'email' => 'kanwil.jabar@kemenag.go.id',
-            'status' => 'Aktif',
-        ],
-        [
-            'no' => 2,
-            'nama' => 'Kanwil Jawa Barat',
-            'provinsi' => 'Jawa Tengah',
-            'email' => 'kanwil.jateng@kemenag.go.id',
-            'status' => 'Non-Aktif',
-        ],
-    ];
-
-    $statusStyles = [
-        'Aktif' => 'bg-[#E5F9EE] text-[#1C9A5A]',
-        'Non-Aktif' => 'bg-[#FEECEC] text-[#E03131]',
-    ];
-@endphp
-
 <section class="space-y-6">
     <header class="space-y-2 flex justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Manajemen Kanwil</h1>
-        <a href="{{ route('cms.manage.kanwil.form') }}"
-                class="inline-flex items-center justify-center rounded-2xl bg-[#EE4D37] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#d24432]">
-                + Tambah Kanwil
-            </a>
+        <h1 class="text-2xl font-semibold text-gray-900">Form Config</h1>
+        <div class="relative">
+            <button id="addBtn"
+                class="inline-flex items-center rounded-2xl bg-[#EE4D37] px-5 py-2.5 text-sm font-semibold text-white">
+                + Tambah Konfigurasi
+            </button>
+
+            <div id="addMenu" class="hidden absolute right-0 mt-2 w-40 rounded-xl bg-white shadow">
+                <a href="{{ route('cms.setting.forms.form', 'formal') }}"
+                class="block px-4 py-2 hover:bg-gray-100">Formal</a>
+                <a href="{{ route('cms.setting.forms.form', 'nonformal') }}"
+                class="block px-4 py-2 hover:bg-gray-100">Nonformal</a>
+            </div>
+        </div>
     </header>
 
     <div class="rounded-3xl bg-white p-6 shadow-sm space-y-6">
         <div class="flex flex-wrap items-end gap-3 border-b border-gray-100 pb-6">
             <label class="flex-1">
-                <input type="search" d="search" placeholder="Cari nama kanwil" class="rounded-2xl border border-gray-200 bg-white px-4 py-2.5 w-full border-none bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0" />
+                <input type="search" d="search" placeholder="Cari nama formsCon" class="rounded-2xl border border-gray-200 bg-white px-4 py-2.5 w-full border-none bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0" />
             </label>
         </div>
-
         <div class="space-y-4">
             <div>
-                <p class="text-lg font-semibold text-gray-900">List Kantor Wilayah</p>
-                <p class="text-sm text-gray-500">Perbarui data kanwil dan kelola akses mereka.</p>
+                <p class="text-lg font-semibold text-gray-900">List Formulir Konfigurasi</p>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="min-w-full text-left text-sm text-gray-700 " id="kanwil-table">
+                <table class="min-w-full text-left text-sm text-gray-700 " id="formsCon-table">
                     <thead>
                         <tr class="text-xs font-semibold uppercase tracking-wide text-gray-400">
                             <th class="py-3 pr-3">No</th>
-                            <th class="py-3 pr-3">Nama Kanwil</th>
-                            <th class="py-3 pr-3">Provinsi</th>
-                            <th class="py-3 pr-3">Email</th>
-                            <th class="py-3 pr-3">Status</th>
+                            <th class="py-3 pr-3">Tipe</th>
+                            <th class="py-3 pr-3">Nama Formulir</th>
                             <th class="py-3 text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="kanwil-table-body" class="divide-y divide-gray-100 dark:divide-gray-800">
+                    <tbody id="formsCon-table-body" class="divide-y divide-gray-100 dark:divide-gray-800">
                     </tbody>
                 </table>
             </div>
@@ -86,27 +67,25 @@
 <link href="https://cdn.datatables.net/2.0.0/css/dataTables.tailwindcss.css" rel="stylesheet" />
 <script src="{{ asset('/js/ajax-table.js') }}"></script>
 <script>
-    const kanwilTable = new AjaxTable({
-        url: "{{ route('cms.manage.kanwil.datatable') }}",
-        tbody: '#kanwil-table-body',
-        pagination: '#kanwil-pagination',
+    const formsConTable = new AjaxTable({
+        url: "{{ route('cms.setting.forms.datatable') }}",
+        tbody: '#formsCon-table-body',
+        pagination: '#formsCon-pagination',
         columns: [
             'no',
-            'name',
-            'province',
-            'email',
-            'is_active',
+            'type',
+            'code',
             'action'
         ]
     });
 
-    kanwilTable.fetch();
+    formsConTable.fetch();
 
     $('#search').on('keyup', function () {
-        kanwilTable.setSearch(this.value);
+        formsConTable.setSearch(this.value);
     });
     $('#per-page').on('change', function () {
-        kanwilTable.setPerPage(this.value);
+        formsConTable.setPerPage(this.value);
     });
     $('.category').on('click', function () {
         const role = $(this).data('role');
@@ -122,7 +101,12 @@
             .addClass('category-active bg-[#EE4D37] text-white border-[#EE4D37]');
 
         // kirim filter ke table
-        kanwilTable.setCat(role);
+        formsConTable.setCat(role);
+
+        $('#addBtn').on('click', function () {
+            $('#addMenu').toggleClass('hidden');
+        });
+
     });
 
 </script>

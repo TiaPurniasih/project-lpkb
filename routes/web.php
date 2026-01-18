@@ -7,6 +7,7 @@ use App\Http\Controllers\CMS\DashboardController as DashboardCmsController;
 use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\KanwilController;
 use App\Http\Controllers\CMS\PermitController;
+use App\Http\Controllers\CMS\SettingController;
 use App\Http\Controllers\CMS\CertificateController;
 use App\Http\Controllers\TemplateControllers;
 use Illuminate\Support\Facades\Route;
@@ -86,7 +87,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/manage/certificates/form', [CertificateController::class, 'store'])->name('cms.manage.certificate.store');
         Route::post('/manage/certificates/delete', [CertificateController::class, 'delete'])->name('cms.manage.certificate.destroy');
 
-
         Route::middleware('role.level:' . User::ROLE_ADMIN)->group(function () {
             Route::get('/manage/kanwil', [KanwilController::class, 'index'])->name('cms.manage.kanwil');
             Route::get('/manage/kanwil/datatable', [KanwilController::class, 'datatable'])->name('cms.manage.kanwil.datatable');
@@ -96,7 +96,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         Route::middleware('role.level:' . User::ROLE_SUPERADMIN)->group(function () {
 
+            Route::get('/settings', [SettingController::class, 'index'])->name('cms.setting');
+            Route::post('/settings', [SettingController::class, 'doForm'])->name('cms.setting.store');
+
+            Route::prefix('/settings/form-config')->group(function () {
+                Route::get('/', [SettingController::class, 'indexConfigForm'])->name('cms.setting.forms');
+                Route::get('/datatable', [SettingController::class, 'configFormDt'])->name('cms.setting.forms.datatable');
+                Route::get('/view/{category?}/{type?}', [SettingController::class, 'viewConfigForm'])->name('cms.setting.forms.view');
+                Route::get('/form/{category?}/{type?}', [SettingController::class, 'configForm'])->name('cms.setting.forms.form');
+                Route::post('/form', [SettingController::class, 'configForm'])->name('cms.setting.forms.form');
+                Route::post('/delete', [SettingController::class, 'delete'])->name('cms.setting.forms.destroy');
+            });
         });
+
+        
     });
     // ---------- END ADMIN & KANWIL -------------
     
