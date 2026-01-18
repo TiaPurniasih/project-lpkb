@@ -103,8 +103,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('/', [SettingController::class, 'indexConfigForm'])->name('cms.setting.forms');
                 Route::get('/datatable', [SettingController::class, 'configFormDt'])->name('cms.setting.forms.datatable');
                 Route::get('/view/{category?}/{type?}', [SettingController::class, 'viewConfigForm'])->name('cms.setting.forms.view');
-                Route::get('/form/{category?}/{type?}', [SettingController::class, 'configForm'])->name('cms.setting.forms.form');
-                Route::post('/form', [SettingController::class, 'configForm'])->name('cms.setting.forms.form');
+                Route::get('/form/{category}/{type?}/{id?}', [SettingController::class, 'configForm'])->name('cms.setting.forms.form');
+                Route::post('/form', [SettingController::class, 'configForm'])->name('cms.setting.forms.store');
                 Route::post('/delete', [SettingController::class, 'delete'])->name('cms.setting.forms.destroy');
             });
         });

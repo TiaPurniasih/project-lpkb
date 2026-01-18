@@ -36,7 +36,7 @@
     @endif
 
     {{-- Delete (Native Laravel) --}}
-    @if($actions['route_delete'])
+    @isset($actions['route_delete'])
     <form action="{{ $actions['route_delete'] }}"
           method="POST"
           onsubmit="return confirm('Yakin ingin menghapus data ini?')"
@@ -57,6 +57,6 @@
             </svg>
         </button>
     </form>
-    @endif
+    @endisset
 
 </div>

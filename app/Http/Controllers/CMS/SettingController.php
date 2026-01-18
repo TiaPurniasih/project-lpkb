@@ -85,23 +85,36 @@ class SettingController extends Controller
 
 
 
-    function configForm($type = null){
+    function configForm($category, $type = null, $id = null){
         if($type){
-            $config = FormConfig::where('');
+            $config = FormConfig::where('id', $id)->first();
         }else{
             $config = new FormConfig;
         }
 
         $data['configs'] = $config;
+        $data['sections'] = FormConfig::select('section')->where('category', $category)->where('form_code')->get();
 
-        return view('cms.pages.settings.form-forms-config', $data);
+        return view('cms.pages.settings.form-forms-config', [
+            'config'   => $config,        // FormConfig model (new atau existing)
+            'category' => $category,      // formal / nonformal
+            'type'     => $type,          // nava-dhammasekha
+            'isEdit'   => isset($config->id),
+        ]);
     }
 
-    function view($id){
-        $permit = PermitApplication::findOrFail($id);
-        $data['permit'] = $permit;
+    function viewConfigForm($category, $type){
+         if($type){
+            $config = FormConfig::where('category', $category)->where('form_code', $type)->get();
+        }else{
+            $config = new FormConfig;
+        }
 
-        return view('cms.pages.manages.permit.view', $data);
+        $data['configs'] = $config;
+        $data['category'] = $category;
+        $data['type'] = $type;
+
+        return view('cms.pages.settings.view-forms-config', $data);
     }
 
     function store(Request $request) {

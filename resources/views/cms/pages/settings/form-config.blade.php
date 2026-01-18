@@ -103,11 +103,14 @@
         // kirim filter ke table
         formsConTable.setCat(role);
 
+    });
+
+    $(document).ready(function (){
         $('#addBtn').on('click', function () {
+            console.log('here');
             $('#addMenu').toggleClass('hidden');
         });
-
-    });
+    })
 
 </script>
 
