@@ -15,6 +15,7 @@ use App\Models\PermitApplication;
 class ProfileController extends Controller
 {
 
+
     //    function lembaga(Request $request) {
     //         if($request->user()->detail){
     //             $data['institution'] = $request->user()->detail;
@@ -22,15 +23,29 @@ class ProfileController extends Controller
     //              $data['institution'] = new UserDetail;
     //         }
 
+    // function lembaga(Request $request)
+    // {
+    //     $data['institution'] = $request->user()->detail;
+    //     $data['institution'] = $request->user()->detail()->firstOrCreate([]);
+
+    // function lembaga(Request $request) {
+    //     $data['institution'] = $request->user()->detail;
+    //     $data['institution'] = $request->user()->detail()->firstOrCreate([]);
+    // }
+    // }
+
     function lembaga(Request $request)
     {
-        $data['institution'] = $request->user()->detail;
-        // $data['institution'] = $request->user()->detail()->firstOrCreate([]);
+        if ($request->user()->detail) {
+            $data['institution'] = $request->user()->detail;
+        } else {
+            $data['institution'] = new UserDetail;
+        }
 
         return view('users.profile.lembaga', $data);
     }
 
-    public function store(Request $request)
+    function store(Request $request)
     {
         try {
             // Cek apakah update atau create baru
