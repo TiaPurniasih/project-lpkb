@@ -14,17 +14,38 @@ use App\Models\PermitApplication;
 
 class ProfileController extends Controller
 {
-   function lembaga(Request $request) {
-        if($request->user()->detail){
+
+
+    //    function lembaga(Request $request) {
+    //         if($request->user()->detail){
+    //             $data['institution'] = $request->user()->detail;
+    //         }else{
+    //              $data['institution'] = new UserDetail;
+    //         }
+
+    // function lembaga(Request $request)
+    // {
+    //     $data['institution'] = $request->user()->detail;
+    //     $data['institution'] = $request->user()->detail()->firstOrCreate([]);
+
+    // function lembaga(Request $request) {
+    //     $data['institution'] = $request->user()->detail;
+    //     $data['institution'] = $request->user()->detail()->firstOrCreate([]);
+    // }
+    // }
+
+    function lembaga(Request $request)
+    {
+        if ($request->user()->detail) {
             $data['institution'] = $request->user()->detail;
-        }else{
-             $data['institution'] = new UserDetail;
+        } else {
+            $data['institution'] = new UserDetail;
         }
-        
+
         return view('users.profile.lembaga', $data);
     }
 
-    public function store(Request $request)
+    function store(Request $request)
     {
         try {
             // Cek apakah update atau create baru
@@ -32,12 +53,12 @@ class ProfileController extends Controller
                 $institution = UserDetail::findOrFail($request->id);
             } else {
                 $institution = new UserDetail;
-                $institution->user_id = $request->user()->id();
+                $institution->user_id = $request->user()->id;
             }
 
             // Handle file dulu
             foreach ($_FILES as $key => $file) {
-                if($file['size'] > 0){
+                if ($file['size'] > 0) {
                     $institution->deleteFile($key);
                     $path = $institution->uploadFile($request->file($key), $key);
                     $institution->{$key} = $path;
@@ -61,30 +82,31 @@ class ProfileController extends Controller
             $institution->save();
 
             return redirect('/beranda')->with('success', 'Data berhasil disimpan!');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             dd($e->getMessage());
             return redirect('/beranda')
                 ->with('error', 'Kesalahan: ' . $e->getMessage());
         }
     }
 
-    function history(Request $request) {
+    function history(Request $request)
+    {
         $papp = PermitApplication::where('user_id', $request->user()->id)->paginate(5);
         $data['applications'] = $papp;
         return view('users.profile.history', $data);
     }
 
-    function historyDetail(Request $request, $uid) {
+    function historyDetail(Request $request, $uid)
+    {
 
         $papp = PermitApplication::whereUuid($uid)->first();
         $data['application'] = $papp;
 
         return view('users.profile.history-detail', $data);
-
-        
     }
 
-    function account(Request $request){
+    function account(Request $request)
+    {
         $data['user'] = $request->user();
 
         return view('users.profile.account', $data);
