@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\USER\DashboardController;
-use App\Http\Controllers\USER\ProfileController;
-use App\Http\Controllers\USER\PerizinanController;
-use App\Http\Controllers\CMS\DashboardController as DashboardCmsController;
-use App\Http\Controllers\CMS\UserController;
-use App\Http\Controllers\CMS\KanwilController;
-use App\Http\Controllers\CMS\PermitController;
-use App\Http\Controllers\CMS\SettingController;
-use App\Http\Controllers\CMS\CertificateController;
-use App\Http\Controllers\TemplateControllers;
-use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CMS\UserController;
+use App\Http\Controllers\TemplateControllers;
+use App\Http\Controllers\CMS\KanwilController;
+use App\Http\Controllers\CMS\PermitController;
+use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\CMS\SettingController;
+use App\Http\Controllers\USER\ProfileController;
+use App\Http\Controllers\USER\DashboardController;
+use App\Http\Controllers\USER\PerizinanController;
+use App\Http\Controllers\CMS\CertificateController;
+use App\Http\Controllers\CMS\DashboardController as DashboardCmsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,14 +40,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if ($user->hasLevel(User::ROLE_USER)) {
             return redirect('/beranda');
         }
-      
         return redirect(to: '/home');
+    });
+
+    Route::controller(PengaturanController::class)
+        ->group(function ($setting) {
+            // $setting->view('/pengaturan', 'users.akun.pengaturan')->name('setting');
+            $setting->get('/pengaturan', 'account')->name('setting');
+            $setting->post('/pengaturan/store', 'store')->name('setting.store');
     });
 
     // ---------------- PEMOHON ------------------
     Route::middleware('role.level:' . User::ROLE_USER)->group(function () {
         Route::get('/beranda', [DashboardController::class, 'dashboard'])->name('user.dashboard');
-        Route::get('/profil/akun', [ProfileController::class, 'account'])->name('user.profil.account');
         Route::get('/profil/lembaga', [ProfileController::class, 'lembaga'])->name('user.profil.lembaga');
         Route::post('/profil/lembaga/form', [ProfileController::class, 'store'])->name('user.profil.store');
         Route::get('/profil/riwayat-perizinan', [ProfileController::class, 'history'])->name('profile.history');

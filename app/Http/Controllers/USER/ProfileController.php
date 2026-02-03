@@ -105,10 +105,10 @@ class ProfileController extends Controller
         return view('users.profile.history-detail', $data);
     }
 
-    function account(Request $request)
-    {
-        $data['user'] = $request->user();
+    // function account(Request $request)
+    // {
+    //     $data['user'] = $request->user();
 
-        return view('users.profile.account', $data);
-    }
+    //     return view('users.akun.pengaturan', $data);
+    // }
 }
