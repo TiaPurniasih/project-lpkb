@@ -90,6 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/manage/certificates/datatable', [CertificateController::class, 'datatable'])->name('cms.manage.certificate.datatable');
         Route::get('/manage/certificates/form/{id?}', [CertificateController::class, 'form'])->name('cms.manage.certificate.form');
         Route::get('/manage/certificates/view/{id}', [CertificateController::class, 'view'])->name('cms.manage.certificate.view');
+        Route::post('/manage/certificates/upload', [CertificateController::class, 'uploadCertif'])->name('cms.manage.certificate.upload');
         Route::post('/manage/certificates/status', [CertificateController::class, 'statusProc'])->name('cms.manage.certificate.status');
         Route::post('/manage/certificates/form', [CertificateController::class, 'store'])->name('cms.manage.certificate.store');
         Route::post('/manage/certificates/delete', [CertificateController::class, 'delete'])->name('cms.manage.certificate.destroy');
