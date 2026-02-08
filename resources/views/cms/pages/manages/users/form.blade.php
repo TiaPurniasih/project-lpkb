@@ -167,23 +167,139 @@ use App\Models\User;
                 </div>
 
                 <div id="tab2" class="tab-content hidden">
-                    @if($user->hasLevel(User::ROLE_USER))
-                    <h2 class="text-base font-semibold text-gray-900">Info Lembaga</h2>
-                    <form action="{{ route('cms.manage.users.lembaga') }}" method="POST" class="mt-6 space-y-6">
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        @csrf
-                        <div class="grid gap-6">
-                            <label class="space-y-2">
-                                <span class="text-sm font-medium text-gray-700">Nama <span class="text-red-500">*</span></span>
-                                <div class="relative">
-                                    <input type="text" placeholder="Nama" name="name" value="{{ $user->name }}" class="w-full appearance-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
-                                </div>
-                            </label>
-                        </div>
-                        <p>Form modifikasi informasi yang terkait dengan tabel users_detail</p>
-                        <p>controller perlu dikembangkan juga (belum ada handling)</p>
+                    @if ($user->hasLevel(User::ROLE_USER))
+                        @php
+                            $detail = $user->detail;
+                        @endphp
 
-                    </form>
+                        <h2 class="text-base font-semibold text-gray-900">Info Lembaga</h2>
+
+                        <form
+                            action="{{ route('cms.manage.users.lembaga') }}"
+                            method="POST"
+                            class="mt-6 space-y-6">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                            <input type="hidden" name="detail_id" value="{{ $detail->id }}">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                                <!-- Nama Lembaga -->
+                                <label class="space-y-2 md:col-span-2">
+                                    <span class="text-sm font-medium text-gray-700">
+                                        Nama Lembaga <span class="text-red-500">*</span>
+                                    </span>
+                                    <input
+                                        type="text"
+                                        name="institution_name"
+                                        value="{{ old('institution_name', $detail?->institution_name) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Nama Organisasi -->
+                                <label class="space-y-2">
+                                    <span class="text-sm font-medium text-gray-700">Nama Organisasi</span>
+                                    <input
+                                        type="text"
+                                        name="organization_name"
+                                        value="{{ old('organization_name', $detail?->organization_name) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Nama PIC -->
+                                <label class="space-y-2">
+                                    <span class="text-sm font-medium text-gray-700">Nama PIC</span>
+                                    <input
+                                        type="text"
+                                        name="pic_name"
+                                        value="{{ old('pic_name', $detail?->pic_name) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Kepala Lembaga -->
+                                <label class="space-y-2">
+                                    <span class="text-sm font-medium text-gray-700">Kepala Lembaga</span>
+                                    <input
+                                        type="text"
+                                        name="institution_head_name"
+                                        value="{{ old('institution_head_name', $detail?->institution_head_name) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Telepon -->
+                                <label class="space-y-2">
+                                    <span class="text-sm font-medium text-gray-700">Telepon Lembaga</span>
+                                    <input
+                                        type="text"
+                                        name="institution_phone"
+                                        value="{{ old('institution_phone', $detail?->institution_phone) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Tanggal Berdiri -->
+                                <label class="space-y-2">
+                                    <span class="text-sm font-medium text-gray-700">Tanggal Berdiri</span>
+                                    <input
+                                        type="date"
+                                        name="established_date"
+                                        value="{{ old('established_date', $detail?->established_date) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Jenjang Pendidikan -->
+                                <label class="space-y-2">
+                                    <span class="text-sm font-medium text-gray-700">Jenjang Pendidikan</span>
+                                    <input
+                                        type="text"
+                                        name="educational_track"
+                                        value="{{ old('educational_track', $detail?->educational_track) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Jenis Pendidikan Buddha -->
+                                <label class="space-y-2">
+                                    <span class="text-sm font-medium text-gray-700">Jenis Pendidikan Buddha</span>
+                                    <input
+                                        type="text"
+                                        name="buddhist_education_type"
+                                        value="{{ old('buddhist_education_type', $detail?->buddhist_education_type) }}"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20">
+                                </label>
+
+                                <!-- Alamat Lengkap -->
+                                <label class="space-y-2 md:col-span-2">
+                                    <span class="text-sm font-medium text-gray-700">Alamat Lengkap</span>
+                                    <textarea
+                                        name="institution_full_address"
+                                        rows="3"
+                                        class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm resize-none
+                                            focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20"
+                                    >{{ old('institution_full_address', $detail?->institution_full_address) }}</textarea>
+                                </label>
+
+                            </div>
+
+                            <!-- ACTION -->
+                            <div class="flex justify-end gap-3 pt-4">
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center rounded-xl bg-[#EE4D37] px-6 py-2
+                                        text-sm font-semibold text-white transition hover:bg-[#D94430]">
+                                    Simpan Perubahan
+                                </button>
+                            </div>
+                        </form>
+
+
+
                     @elseif($user->hasLevel(User::ROLE_KANWIL))
                     <h2 class="text-base font-semibold text-gray-900">Info Kanwil</h2>
                     <form action="{{ route('cms.manage.users.kanwil') }}" method="POST" class="mt-6 space-y-6">

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\User;
+use App\Models\UserDetail;
 use Hash;
 
 class UserController extends Controller
@@ -207,9 +208,50 @@ class UserController extends Controller
             $msg = "Galat: ". $e->getMessage();
             $status = "error";
         }
-        
 
         return redirect()->route('cms.manage.users')->with($status, $msg);
     }
+
+    public function doLembaga(Request $request)  {
+        // 1. Validasi sederhana (tidak ribet)
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'institution_name' => 'required|string|max:255',
+            'organization_name' => 'nullable|string|max:255',
+            'pic_name' => 'nullable|string|max:255',
+            'institution_head_name' => 'nullable|string|max:255',
+            'institution_phone' => 'nullable|string|max:255',
+            'established_date' => 'nullable|date',
+            'educational_track' => 'nullable|string|max:255',
+            'buddhist_education_type' => 'nullable|string|max:255',
+            'institution_full_address' => 'nullable|string',
+            'province' => 'nullable|string',
+            'city' => 'nullable|string',
+        ]);
+        // 3. Simpan / Update ke users_detail
+        UserDetail::updateOrCreate(
+            [
+                'user_id' => $validated['user_id'],
+            ],
+            [
+                'institution_name' => $validated['institution_name'],
+                'organization_name' => $validated['organization_name'],
+                'pic_name' => $validated['pic_name'],
+                'institution_head_name' => $validated['institution_head_name'],
+                'institution_phone' => $validated['institution_phone'],
+                'established_date' => $validated['established_date'],
+                'educational_track' => $validated['educational_track'],
+                'buddhist_education_type' => $validated['buddhist_education_type'],
+                'institution_full_address' => $validated['institution_full_address'],
+            ]
+        );
+
+        // 4. Redirect balik
+        return redirect()
+            ->back()
+            ->with('success', 'Informasi lembaga berhasil diperbarui');
+    }
+
+
     
 }

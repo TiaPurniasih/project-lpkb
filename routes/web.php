@@ -81,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/manage/permits/datatable', [PermitController::class, 'datatable'])->name('cms.manage.permit.datatable');
         Route::get('/manage/permits/form/{id?}', [PermitController::class, 'form'])->name('cms.manage.permit.form');
         Route::get('/manage/permits/view/{id}', [PermitController::class, 'view'])->name('cms.manage.permit.view');
+        Route::get('/manage/permits/histories', [PermitController::class, 'history'])->name('cms.manage.permit.history');
         Route::post('/manage/permits/status', [PermitController::class, 'statusProc'])->name('cms.manage.permit.status');
         Route::post('/manage/permits/form', [PermitController::class, 'store'])->name('cms.manage.permit.store');
         Route::post('/manage/permits/delete', [PermitController::class, 'delete'])->name('cms.manage.permit.destroy');

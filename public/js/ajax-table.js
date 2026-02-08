@@ -9,14 +9,14 @@ class AjaxTable {
         this.perPage = 10;
         this.search = '';
         this.category = '';
+        this.params = {}; 
     }
 
     fetch() {
         $.get(this.url, {
             page: this.page,
             per_page: this.perPage,
-            search: this.search,
-            category: this.category,
+            ...this.params, // 🔥 spread params
         }, (res) => {
             this.renderTable(res.data);
             this.renderPagination(res.meta, res.data.length);
@@ -108,18 +108,11 @@ class AjaxTable {
         });
     }
 
-    setSearch(value) {
-        this.search = value;
+    setParam(key, value) {
+        this.params[key] = value;
         this.page = 1;
         this.fetch();
     }
-    
-    setCat(value) {
-        this.category = value;
-        this.page = 1;
-        this.fetch();
-    }
-
     setPerPage(value) {
         this.perPage = value;
         this.page = 1;

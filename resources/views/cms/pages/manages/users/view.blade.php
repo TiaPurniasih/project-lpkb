@@ -85,11 +85,117 @@
         </table>
     </div>
     @if($user->hasLevel(User::ROLE_USER))
-    <div class="rounded-3xl bg-white p-6 shadow-sm">
-        <h2 class="text-base font-semibold text-gray-900">Informasi Lembaga</h2>
-        <p>Perlu ditampilkan data terkait</p>
+        @php
+            $detail = $user->detail; // sesuaikan dengan relasi aslinya
+        @endphp
 
-    </div>
+        <div class="rounded-3xl bg-white p-6 shadow-sm">
+            <h2 class="mb-4 text-base font-semibold text-gray-900">
+                Informasi Lembaga
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm">
+                    <tbody class="divide-y divide-gray-100">
+
+                        <tr>
+                            <td class="w-1/3 py-3 font-medium text-gray-600">Nama Lembaga</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->institution_name ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Nama Organisasi</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->organization_name ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Nama PIC</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->pic_name ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Kepala Lembaga</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->institution_head_name ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Telepon Lembaga</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->institution_phone ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Alamat Lengkap</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->institution_full_address ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Provinsi</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->province ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Kabupaten / Kota</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->city ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Tanggal Berdiri</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->established_date
+                                    ? \Carbon\Carbon::parse($detail->established_date)->translatedFormat('d F Y')
+                                    : '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Jenjang Pendidikan</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->educational_track ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Jenis Pendidikan Buddha</td>
+                            <td class="py-3 text-gray-900">
+                                {{ $detail?->buddhist_education_type ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-3 font-medium text-gray-600">Status Kelengkapan</td>
+                            <td class="py-3">
+                                @if ($detail?->is_complete)
+                                    <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                                        Lengkap
+                                    </span>
+                                @else
+                                    <span class="rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700">
+                                        Belum Lengkap
+                                    </span>
+                                @endif
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     @elseif($user->hasLevel(User::ROLE_KANWIL))
     @endif
 

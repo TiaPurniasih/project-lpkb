@@ -32,43 +32,54 @@
 <div class="space-y-5 sm:space-y-6">
     <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
         <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6">
-            <div class="flex flex-left items-end gap-3 border-b border-gray-100 pb-6">
-                <label class="w-2/5">
-                    <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">Cari nama lembaga</span>
-                    <input type="search" placeholder="Cari nama lembaga" class="rounded-2xl border border-gray-200 bg-white px-2 py-2 w-full  bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0" />
-                </label>
-                <label class="w-1/5">
-                    <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">Provinsi</span>
-                    <div class="relative">
-                        <select class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-2.5 pr-10 text-sm text-gray-700 focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20 [&::-ms-expand]:hidden [-webkit-appearance:none] [-moz-appearance:none] [appearance:none]">
-                            <option>Semua Provinsi</option>
+            <form id="filter-form">
+                <div class="flex flex-left items-end gap-3 border-b border-gray-100 pb-6">
+
+                    <!-- Search -->
+                    <label class="w-2/5">
+                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">
+                            Cari nama lembaga
+                        </span>
+                        <input
+                            id="search"
+                            type="search"
+                            placeholder="Cari nama lembaga"
+                            class="rounded-2xl border border-gray-200 bg-white px-2 py-2 w-full text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0"
+                        />
+                    </label>
+
+                    <!-- Province -->
+                    <label class="w-1/5">
+                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">
+                            Provinsi
+                        </span>
+                        <select
+                            id="province"
+                            class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700">
+                            <option value="">Semua Provinsi</option>
                             @foreach ($wilayah as $province)
-                            <option value="{{ $province->code }}">{{$province->name}}</option>
+                                <option value="{{ $province->code }}">{{ $province->name }}</option>
                             @endforeach
                         </select>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            class="pointer-events-none absolute inset-y-0 right-4 my-auto text-gray-400">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                </label>
-                <label class="w-1/5">
-                    <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">Jenis Izin</span>
-                    <div class="relative">
-                        <select class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-2.5 pr-10 text-sm text-gray-700 focus:border-[#EE4D37] focus:outline-none focus:ring-2 focus:ring-[#EE4D37]/20 [&::-ms-expand]:hidden [-webkit-appearance:none] [-moz-appearance:none] [appearance:none]">
-                            <option>Jenis Izin (All)</option>
-                            <option>Formal</option>
-                            <option>Nonformal</option>
+                    </label>
+
+                    <!-- Type -->
+                    <label class="w-1/5">
+                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">
+                            Jenis Izin
+                        </span>
+                        <select
+                            id="type"
+                            class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700">
+                            <option value="">Semua</option>
+                            <option value="formal">Formal</option>
+                            <option value="nonformal">Nonformal</option>
                         </select>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            class="pointer-events-none absolute inset-y-0 right-4 my-auto text-gray-400">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                </label>
-            </div>
+                    </label>
+
+                    <button type="submit" class="hidden">Cari</button>
+                </div>
+            </form>
 
             <div class="max-w-full overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-100 text-left text-sm" id="">
@@ -130,9 +141,29 @@
 
     permitTable.fetch();
 
-    $('#search').on('keyup', function () {
-        permitTable.setSearch(this.value);
+    $('#filter-form').on('submit', function (e) {
+        e.preventDefault();
     });
+
+    let searchTimeout;
+
+    $('#search').on('keyup', function () {
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+            permitTable.setParam('search', this.value);
+        }, 400);
+    });
+
+    $('#province').on('change', function () {
+        permitTable.setParam('province', this.value);
+    });
+
+    $('#type').on('change', function () {
+        permitTable.setParam('type', this.value);
+    });
+
+
     $('#per-page').on('change', function () {
         permitTable.setPerPage(this.value);
     });
@@ -153,7 +184,7 @@
         permitTable.setCat(role);
     });
 
-    </script>
+</script>
 
 
 @endsection

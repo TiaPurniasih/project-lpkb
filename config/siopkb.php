@@ -2632,10 +2632,22 @@ return [
     ],
     'state' => [
         '0' => 'Menunggu',
-        '1' => 'Ditinjau',
-        '2' => 'Disetujui',
-        '3' => 'Selesai',
-        '4' => 'Ditolak',
-        '5' => 'Perbaikan'
-    ]
+        '1' => 'Ditinjau Kanwil',
+        '2' => 'Disetujui Kanwil',
+        '3' => 'Ditinjau Pusat',
+        '4' => 'Disetujui Pusat',
+        '5' => 'Selesai',
+        '6' => 'Ditolak',
+        '7' => 'Perbaikan'
+    ],
+    'state_color' => [
+        '0' => 'bg-[#FFF7E6] text-[#B76E00]', // Menunggu (pending)
+        '1' => 'bg-[#F3F4F6] text-[#6B7280]', // Ditinjau Kanwil
+        '2' => 'bg-[#E5F9EE] text-[#1C9A5A]', // Disetujui Kanwil
+        '3' => 'bg-[#E5F9EE] text-[#1C9A5A]', // Ditinjau Pusat (sudah ada)
+        '4' => 'bg-[#DCFCE7] text-[#15803D]', // Disetujui Pusat
+        '5' => 'bg-[#ECFDF5] text-[#047857]', // Selesai
+        '6' => 'bg-[#FEE2E2] text-[#B91C1C]', // Ditolak
+        '7' => 'bg-[#E3F4FF] text-[#1980C3]'  // Perbaikan (sudah ada)
+    ],
 ];

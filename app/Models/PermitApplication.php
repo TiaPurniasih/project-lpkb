@@ -32,4 +32,9 @@ class PermitApplication extends Model implements Auditable
     function user(){
         return $this->belongsTo(User::class);
     }
+
+    function history() {
+        return $this->hasMany(PermitApplicationHistory::class, 'permit_application_id');
+        
+    }
 }

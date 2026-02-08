@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\PermitApplication;
+use App\Models\PermitApplicationHistory;
+
 
 use Hash;
 
@@ -23,7 +25,8 @@ class PermitController extends Controller
     {
         $perPage = $request->get('per_page', 10);
         $search  = $request->get('search');
-        $category  = $request->get('category');
+        $province  = $request->get('province');
+        $type  = $request->get('type');
 
         $query = PermitApplication::query();
 
@@ -31,6 +34,17 @@ class PermitController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('type', 'like', "%{$search}%")
                 ->orWhere('province', 'like', "%{$search}%");
+            });
+        }
+
+        if ($province) {
+            $query->where(function ($q) use ($province) {
+                $q->where('province', 'like', "%{$province}%");
+            });
+        }
+        if ($type) {
+            $query->where(function ($q) use ($type) {
+                $q->where('type', "$type");
             });
         }
       
@@ -41,7 +55,7 @@ class PermitController extends Controller
             $actions = [
                 'id' => $pmt->id,
                 'route_view' => 'cms.manage.permit.view',
-                'route_edit' => 'cms.manage.permit.form',
+                'route_edit' => null,
                 'route_delete' => 'cms.manage.permit.destroy',
             ];
             $user = $pmt->user ?? null;
@@ -132,6 +146,42 @@ class PermitController extends Controller
         
 
         return redirect('/manage/permit')->with($status, $msg);
+    }
+
+    public function statusProc(Request $request)  {
+
+        try {
+            $pma = PermitApplication::whereUuid($request->uuid)->first();
+            if($pma){
+                $oldState = $pma->state;
+
+                $record = new PermitApplicationHistory();
+                $record->permit_application_id = $pma->id;
+                $record->old_status = $oldState ?? '0';
+                $record->new_status = $request->state;
+                $record->changed_by = $request->user()->id;
+                $record->notes = $request->notes;
+                $record->save();
+
+                $pma->status = $request->state;
+                $pma->save();
+
+                return redirect()->back()->with('success', 'Status berhasil diubah');
+            }else{
+                return redirect()->back()->with('error', 'Data tidak ditemukan');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th->getMessage());
+        }
+        
+    }
+
+    public function history(Request $request){
+        $data['histories'] = PermitApplicationHistory::paginate(30);
+
+        return view('cms.pages.manages.permit.histories', $data);
+
     }
 
 }

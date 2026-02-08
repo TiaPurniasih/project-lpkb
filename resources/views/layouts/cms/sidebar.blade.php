@@ -30,8 +30,8 @@
                 ],
                 [
                     'label' => 'Riwayat Pengajuan Izin',
-                    'href' => route('admin-pusat.pengajuan-perizinan.history'),
-                    'active' => request()->routeIs('admin-pusat.pengajuan-perizinan.history'),
+                    'href' => route('cms.manage.permit.history'),
+                    'active' => request()->routeIs('cms.manage.permit.history'),
                 ],
             ],
         ],
